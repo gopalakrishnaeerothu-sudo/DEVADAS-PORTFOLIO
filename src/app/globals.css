@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #08090D;
+    --foreground: #F5F3EF;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #08090D;
+    color: #F5F3EF;
+  }
+
+  body {
+    background-color: #08090D;
+    color: #F5F3EF;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden;
+    selection-background-color: #FF6B35;
+    selection-color: #ffffff;
+  }
+
+  ::selection {
+    background: #FF6B35;
+    color: #ffffff;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #08090D;
+}
+::-webkit-scrollbar-thumb {
+  background: #252833;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF6B35;
+}
+
+/* Glassmorphism helpers */
+.glass-panel {
+  background: rgba(21, 23, 29, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(28, 31, 38, 0.85);
+  border-color: rgba(255, 107, 53, 0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 107, 53, 0.15);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFF6E5 0%, #FF9F1C 50%, #FF6B35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-silver {
+  background: linear-gradient(180deg, #FFFFFF 0%, #A0A3AB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-orange {
+  box-shadow: 0 0 35px rgba(255, 107, 53, 0.3);
+}
+
+.glow-orange-border {
+  border-color: rgba(255, 107, 53, 0.6);
+  box-shadow: 0 0 25px rgba(255, 107, 53, 0.25);
+}
