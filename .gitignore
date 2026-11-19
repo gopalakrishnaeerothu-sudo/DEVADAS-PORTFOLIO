@@ -38,3 +38,5 @@ next-env.d.ts
 extract_assets.py
 generate_assets.py
 public/images/raw/
+
+.vercel
