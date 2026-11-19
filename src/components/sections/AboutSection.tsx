@@ -2,29 +2,29 @@
 
 import React from "react";
 import Image from "next/image";
-import { Film, Award, Sparkles, Compass, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { Film, Award, Sparkles, Compass, ArrowUpRight } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/data/portfolioData";
 
 export default function AboutSection() {
   const { personal } = PORTFOLIO_DATA;
 
   return (
-    <section id="about" className="relative py-28 md:py-36 px-6 md:px-14 bg-[#08090D] overflow-hidden">
+    <section id="about" className="relative py-28 md:py-36 px-6 md:px-14 bg-[#050507] overflow-hidden font-sans">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-[#FF6B35]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-0 w-[500px] h-[500px] bg-[#1e2230]/40 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-[#FF0000]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-0 w-[500px] h-[500px] bg-[#BCD6DB]/5 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="space-y-3 mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-widest text-[#FF6B35] bg-[#FF6B35]/10 border border-[#FF6B35]/20">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono uppercase tracking-widest text-[#FF0000] bg-[#FF0000]/10 border border-[#FF0000]/30 font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>01 · Creative Identity</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-display font-extrabold text-[#F5F5F5] tracking-tight">
             Meet Meesala Devadas
           </h2>
-          <p className="text-sm md:text-base text-muted-text max-w-2xl font-sans">
+          <p className="text-sm md:text-base text-[#BCD6DB] max-w-2xl font-sans">
             A visual storyteller bridging the worlds of technical editing, evocative color science, and cinematic narrative.
           </p>
         </div>
@@ -33,10 +33,9 @@ export default function AboutSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Portrait Showcase */}
           <div className="lg:col-span-5 relative group">
-            {/* Ambient Border Glow */}
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#FF6B35]/40 via-purple-500/20 to-blue-500/20 blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#FF0000]/50 via-[#BCD6DB]/20 to-[#E0F1F1]/20 blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
 
-            <div className="relative rounded-3xl overflow-hidden border border-white/15 bg-[#12141A] shadow-2xl">
+            <div className="relative rounded-3xl overflow-hidden border border-[#BCD6DB]/20 bg-[#12141A] shadow-2xl">
               <div className="aspect-[4/5] relative w-full">
                 <Image
                   src={personal.heroImage}
@@ -45,24 +44,24 @@ export default function AboutSection() {
                   className="object-cover object-top filter contrast-[1.05] group-hover:scale-105 transition-transform duration-700"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#08090D] via-transparent to-transparent opacity-90" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-transparent opacity-90" />
               </div>
 
               {/* In-Card Film Slate Tag */}
               <div className="p-6 space-y-2 relative -mt-16 z-10">
-                <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase bg-black/70 backdrop-blur-md border border-white/10 text-white/90">
-                  <span className="w-2 h-2 rounded-full bg-[#36d67e]" />
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md text-[10px] font-mono uppercase bg-black/80 backdrop-blur-md border border-[#BCD6DB]/20 text-[#E0F1F1]">
+                  <span className="w-2 h-2 rounded-full bg-[#FF0000] animate-pulse" />
                   <span>Restart Academy Alum</span>
                 </div>
-                <h3 className="text-lg font-bold text-white tracking-wide">
+                <h3 className="text-xl font-bold text-white tracking-wide font-display">
                   {personal.name}
                 </h3>
-                <p className="text-xs text-white/70 font-sans">
+                <p className="text-xs text-[#BCD6DB] font-sans">
                   Video Editor · Cinematographer · Visual Storyteller
                 </p>
-                <div className="pt-2 flex items-center justify-between text-[11px] font-mono text-white/50 border-t border-white/10">
+                <div className="pt-2 flex items-center justify-between text-[11px] font-mono text-[#BCD6DB]/70 border-t border-white/10">
                   <span>Hyderabad / Nidadavole</span>
-                  <span className="text-[#FF6B35]">Telugu & English</span>
+                  <span className="text-[#FF0000] font-semibold">Telugu & English</span>
                 </div>
               </div>
             </div>
@@ -71,13 +70,13 @@ export default function AboutSection() {
           {/* Right Column: Bio & Core Pillars */}
           <div className="lg:col-span-7 space-y-8">
             <div className="space-y-4">
-              <h3 className="text-2xl md:text-3xl font-display font-semibold text-white leading-snug">
+              <h3 className="text-2xl md:text-3xl font-display font-bold text-white leading-snug">
                 &ldquo;Every frame has a story. I bring it to life with rhythm, color, and soul.&rdquo;
               </h3>
-              <p className="text-sm md:text-base text-white/75 leading-relaxed font-sans">
+              <p className="text-sm md:text-base text-[#F5F5F5]/85 leading-relaxed font-sans">
                 {personal.bio}
               </p>
-              <p className="text-sm md:text-base text-white/65 leading-relaxed font-sans">
+              <p className="text-sm md:text-base text-[#BCD6DB] leading-relaxed font-sans">
                 My creative journey was forged at <span className="text-white font-semibold">Restart Academy, Hyderabad</span>, where I immersed myself in advanced film editing techniques, cinematography, lighting theory, and screenwriting. Today, I collaborate with digital creators, commercial brands, and non-profit organizations to deliver cinematic visuals that linger in memory.
               </p>
             </div>
@@ -108,13 +107,13 @@ export default function AboutSection() {
               ].map((item) => (
                 <div
                   key={item.title}
-                  className="p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF6B35]/40 transition-colors duration-300"
+                  className="p-4 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF0000]/40 transition-colors duration-300"
                 >
-                  <div className="flex items-center gap-2.5 text-white font-semibold text-sm">
-                    <item.icon className="w-4 h-4 text-[#FF6B35]" />
+                  <div className="flex items-center gap-2.5 text-white font-semibold text-sm font-display">
+                    <item.icon className="w-4 h-4 text-[#FF0000]" />
                     <span>{item.title}</span>
                   </div>
-                  <p className="mt-1 text-xs text-white/60 font-sans leading-relaxed">
+                  <p className="mt-1 text-xs text-[#BCD6DB]/80 font-sans leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -124,22 +123,22 @@ export default function AboutSection() {
             {/* Quick Metrics */}
             <div className="pt-4 border-t border-white/10 grid grid-cols-3 gap-4 text-center sm:text-left">
               <div>
-                <span className="block text-2xl md:text-3xl font-display font-black text-white">
+                <span className="block text-2xl md:text-3xl font-display font-extrabold text-white">
                   25+
                 </span>
-                <span className="text-xs text-white/50 font-mono">Projects Delivered</span>
+                <span className="text-xs text-[#BCD6DB]/60 font-mono">Projects Delivered</span>
               </div>
               <div>
-                <span className="block text-2xl md:text-3xl font-display font-black text-[#FF6B35]">
+                <span className="block text-2xl md:text-3xl font-display font-extrabold text-[#FF0000]">
                   100%
                 </span>
-                <span className="text-xs text-white/50 font-mono">Story Focused</span>
+                <span className="text-xs text-[#BCD6DB]/60 font-mono">Story Focused</span>
               </div>
               <div>
-                <span className="block text-2xl md:text-3xl font-display font-black text-white">
+                <span className="block text-2xl md:text-3xl font-display font-extrabold text-white">
                   4K
                 </span>
-                <span className="text-xs text-white/50 font-mono">ProRes & RAW</span>
+                <span className="text-xs text-[#BCD6DB]/60 font-mono">ProRes & RAW</span>
               </div>
             </div>
 
@@ -149,7 +148,7 @@ export default function AboutSection() {
                 href={personal.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-semibold tracking-wider bg-[#FF6B35] hover:bg-[#FF8354] text-white transition-all shadow-lg shadow-[#FF6B35]/25"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold tracking-wider bg-[#FF0000] hover:bg-[#E60000] text-white transition-all shadow-lg shadow-[#FF0000]/30 hover:-translate-y-0.5"
               >
                 <span>Let&apos;s Collaborate</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -157,7 +156,7 @@ export default function AboutSection() {
 
               <a
                 href="#projects"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-semibold tracking-wider bg-white/5 hover:bg-white/10 text-white border border-white/15 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-semibold tracking-wider bg-white/5 hover:bg-white/10 text-white border border-[#BCD6DB]/25 transition-all hover:-translate-y-0.5"
               >
                 <span>Browse Showcase</span>
               </a>

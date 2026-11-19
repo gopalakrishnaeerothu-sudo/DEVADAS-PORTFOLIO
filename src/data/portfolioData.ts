@@ -48,8 +48,8 @@ export const PORTFOLIO_DATA = {
     instagramUrl: "https://www.instagram.com/editor_of_nidadavole?igsh=NHRkbmFxeGtnMXA1",
     languages: ["Telugu (Native)", "English (Professional)"],
     status: "Available for Freelance & Full-time Productions",
-    heroImage: "/images/profile/devadas-portrait.jpg",
-    cinematicImage: "/images/profile/devadas-cinematic.jpg",
+    heroImage: "/images/profile/devadas-hero-full.jpg",
+    cinematicImage: "/images/profile/devadas-hero-full.jpg",
   },
 
   skills: [
@@ -110,7 +110,7 @@ export const PORTFOLIO_DATA = {
       level: "Advanced / Primary",
       proficiency: 95,
       description: "Primary powerhouse for node-based color grading, Fairlight audio mixing, and high-fidelity 4K exports.",
-      color: "#FF5E36"
+      color: "#FF0000"
     },
     {
       name: "Adobe Premiere Pro",
@@ -156,6 +156,21 @@ export const PORTFOLIO_DATA = {
 
   projects: [
     {
+      id: "project-thar-cinematic",
+      title: "THAR 4X4 — High-Octane Commercial",
+      category: "Automotive & Commercial",
+      badge: "Commercial Film",
+      description: "Adrenaline-fueled automotive commercial highlighting raw horsepower, speed ramping, and aggressive sound design.",
+      longDescription: "A fast-paced commercial edit with high-impact sound design (engine revs, gravel crunches, bass drops). Handled aggressive speed ramping and punchy transition cuts that command viewer adrenaline throughout.",
+      driveUrl: "https://drive.google.com/file/d/1iFsdpZDJNIg7pxljyGZgtfs5dqDqX5GD/view?usp=drivesdk",
+      driveEmbed: "https://drive.google.com/file/d/1iFsdpZDJNIg7pxljyGZgtfs5dqDqX5GD/preview",
+      thumbnail: "/images/projects/thar-cinematic.jpg",
+      tools: ["DaVinci Resolve", "CapCut Pro", "Custom Foley"],
+      duration: "0:45",
+      highlights: ["Speed Ramping", "Engine Foley Design", "Teal & Orange Grade"],
+      year: "2024"
+    },
+    {
       id: "project-cover-song",
       title: "COVER SONG — Melodic Visual Odyssey",
       category: "Music Video",
@@ -171,27 +186,12 @@ export const PORTFOLIO_DATA = {
       year: "2024"
     },
     {
-      id: "project-thar-cinematic",
-      title: "THAR 4X4 — High-Octane Commercial",
-      category: "Automotive & Commercial",
-      badge: "High Energy",
-      description: "Adrenaline-fueled automotive showcase highlighting the raw power and aesthetics of the Mahindra Thar with speed ramping and sound design.",
-      longDescription: "A fast-paced commercial edit with high-impact sound design (engine revs, gravel crunches, bass drops). Handled aggressive speed ramping and punchy transition cuts that maintain viewer adrenaline throughout.",
-      driveUrl: "https://drive.google.com/file/d/1iFsdpZDJNIg7pxljyGZgtfs5dqDqX5GD/view?usp=drivesdk",
-      driveEmbed: "https://drive.google.com/file/d/1iFsdpZDJNIg7pxljyGZgtfs5dqDqX5GD/preview",
-      thumbnail: "/images/projects/thar-cinematic.jpg",
-      tools: ["DaVinci Resolve", "CapCut Pro", "Custom Foley"],
-      duration: "0:45",
-      highlights: ["Speed Ramping", "Engine Foley Design", "Teal & Orange Grade"],
-      year: "2024"
-    },
-    {
       id: "project-honey-shortfilm",
       title: "HONEY IS THE BEST — Narrative Short Film",
       category: "Short Film & Creator",
-      badge: "Storytelling",
-      description: "Humorous and engaging narrative video collaborating with digital creators, focusing on comedic timing, clean dialogues, and character focus.",
-      longDescription: "Directed timing and dialogue cuts to ensure jokes landed with punch. Cleaned on-location ambient audio noise and integrated playful sound cues while maintaining cinematic framing.",
+      badge: "Narrative Acting",
+      description: "Humorous and intense narrative video collaborating with digital creators, focusing on comedic and dramatic timing.",
+      longDescription: "Directed timing and dialogue cuts to ensure jokes and dramatic beats landed with punch. Cleaned on-location ambient audio noise and integrated playful sound cues while maintaining cinematic framing.",
       driveUrl: "https://drive.google.com/file/d/1Qek2k4QKTRrcL02eNKhRQB26Oeme7ID5/view?usp=drivesdk",
       driveEmbed: "https://drive.google.com/file/d/1Qek2k4QKTRrcL02eNKhRQB26Oeme7ID5/preview",
       thumbnail: "/images/projects/honey-shortfilm.jpg",

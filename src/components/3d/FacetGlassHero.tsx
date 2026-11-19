@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { ArrowLeft, Play, Sparkles, ChevronDown, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, Play, Sparkles, ChevronDown } from "lucide-react";
 import { PORTFOLIO_DATA } from "@/data/portfolioData";
 
 interface FacetGlassHeroProps {
@@ -65,7 +65,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     layoutScale: number;
     blockWidth: number;
     blockHeight: number;
-    shatterProgress: number; // 0 to 1
+    shatterProgress: number;
     shattering: boolean;
     reassembling: boolean;
   }>({
@@ -92,8 +92,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     let width = container.clientWidth || window.innerWidth;
     let height = container.clientHeight || window.innerHeight;
 
-    // 1. Scene & Camera Setup
-    // FOV 30°, placed so that 1 world unit = 1 CSS px at z = 0
+    // 1. Scene & Camera Setup (FOV 30°, 1 world unit = 1 CSS px at z = 0)
     const scene = new THREE.Scene();
     scene.background = new THREE.Color("#050507");
 
@@ -109,7 +108,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
+    renderer.toneMappingExposure = 1.05;
     container.innerHTML = "";
     container.appendChild(renderer.domElement);
 
@@ -120,67 +119,79 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     scene.environment = pmremGenerator.fromScene(roomEnv).texture;
     scene.environmentIntensity = 0.42;
 
-    // Soft white-blue key light from top-left
-    const keyLight = new THREE.DirectionalLight(0xd4e4ff, 1.8);
-    keyLight.position.set(-width * 0.4, height * 0.5, 400);
+    // Soft white-blue key light from top-left (color #E0F1F1 tint)
+    const keyLight = new THREE.DirectionalLight(0xe0f1f1, 1.9);
+    keyLight.position.set(-width * 0.4, height * 0.5, 450);
     scene.add(keyLight);
 
-    // Warm cinematic fill light from bottom-right
-    const fillLight = new THREE.DirectionalLight(0xff7733, 1.2);
-    fillLight.position.set(width * 0.4, -height * 0.4, 300);
+    // Signature Red fill light from bottom-right (#FF0000)
+    const fillLight = new THREE.DirectionalLight(0xff0000, 1.5);
+    fillLight.position.set(width * 0.45, -height * 0.4, 320);
     scene.add(fillLight);
 
-    // Soft ambient light
-    const ambientLight = new THREE.AmbientLight(0x181a24, 1.2);
+    // Soft cyan-slate ambient light (#BCD6DB)
+    const ambientLight = new THREE.AmbientLight(0x1a2028, 1.3);
     scene.add(ambientLight);
 
-    // 4. Floating Cinematic Background Elements (Film Reels & Golden Sparks)
+    // 4. Floating Cinema Background Elements (Red Embers & Aperture Torus)
     const filmReelsGroup = new THREE.Group();
     scene.add(filmReelsGroup);
 
-    // Camera Aperture / Lens Ring in 3D
-    const ringGeo = new THREE.TorusGeometry(120, 4, 16, 64);
+    const ringGeo = new THREE.TorusGeometry(140, 5, 16, 64);
     const ringMat = new THREE.MeshStandardMaterial({
-      color: 0x22242c,
+      color: 0x1a1c24,
       roughness: 0.3,
-      metalness: 0.8,
-      wireframe: false
+      metalness: 0.8
     });
     const apertureRing = new THREE.Mesh(ringGeo, ringMat);
-    apertureRing.position.set(width * 0.36, -height * 0.15, -120);
+    apertureRing.position.set(width * 0.38, -height * 0.12, -140);
     apertureRing.rotation.set(0.4, -0.6, 0.2);
     filmReelsGroup.add(apertureRing);
 
-    // Film Sprocket Ring
-    const innerRingGeo = new THREE.TorusGeometry(80, 2, 8, 32);
-    const innerRingMat = new THREE.MeshStandardMaterial({ color: 0xff6b35, roughness: 0.4, metalness: 0.5 });
+    const innerRingGeo = new THREE.TorusGeometry(95, 2.5, 8, 32);
+    const innerRingMat = new THREE.MeshStandardMaterial({ color: 0xff0000, roughness: 0.3, metalness: 0.6 });
     const innerRing = new THREE.Mesh(innerRingGeo, innerRingMat);
     innerRing.position.copy(apertureRing.position);
     innerRing.rotation.copy(apertureRing.rotation);
     filmReelsGroup.add(innerRing);
 
-    // Subtle floating dust / amber embers
-    const particleCount = 120;
+    // Vibrant Red & Ice Dust Particles
+    const particleCount = 140;
     const particleGeo = new THREE.BufferGeometry();
     const particlePos = new Float32Array(particleCount * 3);
+    const particleColors = new Float32Array(particleCount * 3);
+
     for (let i = 0; i < particleCount * 3; i += 3) {
-      particlePos[i] = (Math.random() - 0.5) * width * 1.4;
-      particlePos[i + 1] = (Math.random() - 0.5) * height * 1.4;
-      particlePos[i + 2] = (Math.random() - 0.5) * 400 - 100;
+      particlePos[i] = (Math.random() - 0.5) * width * 1.5;
+      particlePos[i + 1] = (Math.random() - 0.5) * height * 1.5;
+      particlePos[i + 2] = (Math.random() - 0.5) * 450 - 120;
+
+      // Randomly crimson red (#FF0000) or ice tint (#E0F1F1)
+      if (Math.random() > 0.4) {
+        particleColors[i] = 1.0;
+        particleColors[i + 1] = 0.05;
+        particleColors[i + 2] = 0.05;
+      } else {
+        particleColors[i] = 0.88;
+        particleColors[i + 1] = 0.95;
+        particleColors[i + 2] = 0.95;
+      }
     }
     particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePos, 3));
+    particleGeo.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
+
     const particleMat = new THREE.PointsMaterial({
-      size: 3.5,
-      color: 0xffa050,
+      size: 3.8,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.55,
       blending: THREE.AdditiveBlending
     });
     const bgParticles = new THREE.Points(particleGeo, particleMat);
     scene.add(bgParticles);
 
     // 5. Glass Shaders & Material Construction
-    // Layout scale: S = blockWidth / 1730
+    // Page block: centered, side margins 5.5%, top/bottom 8.5%
     const marginSide = width * 0.055;
     const marginTop = height * 0.085;
     const blockWidth = Math.max(340, width - marginSide * 2);
@@ -194,7 +205,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     const uniforms = stateRef.current.uniforms;
     uniforms.uScale.value = S;
 
-    // Glass Material with Custom Lavender Cursor Glow via onBeforeCompile
+    // Glass Material with Cursor Glow (Lavender / Slate Emission vec3(.42,.37,.62))
     const glassMaterial = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color("#17171b"),
       roughness: 0.36,
@@ -205,7 +216,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       iridescenceIOR: 1.3,
       iridescenceThicknessRange: [250, 650],
       metalness: 0.1,
-      transmission: 0.05,
+      transmission: 0.06,
       transparent: true,
       opacity: 0.98
     });
@@ -222,7 +233,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
         ${shader.fragmentShader}
       `;
 
-      // Inject cursor glow: vec3(.42,.37,.62) * .16 * exp(-1.6 * (d / 300S)^2)
       shader.fragmentShader = shader.fragmentShader.replace(
         `#include <dithering_fragment>`,
         `
@@ -230,15 +240,15 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
         float distToCursor = length(vWorldPosition - uPointerPos);
         float glowRadius = 320.0 * max(0.5, uScale);
         float glowFactor = exp(-1.6 * pow(distToCursor / glowRadius, 2.0)) * uGlowIntensity;
-        vec3 lavenderGlow = vec3(0.42, 0.37, 0.62) * 0.28 * glowFactor;
-        vec3 amberRim = vec3(1.0, 0.42, 0.18) * 0.12 * glowFactor;
-        gl_FragColor.rgb += lavenderGlow + amberRim;
+        vec3 lavenderGlow = vec3(0.42, 0.37, 0.62) * 0.22 * glowFactor;
+        vec3 redRim = vec3(1.0, 0.05, 0.05) * 0.25 * glowFactor;
+        gl_FragColor.rgb += lavenderGlow + redRim;
         `
       );
     };
     stateRef.current.glassMaterial = glassMaterial;
 
-    // 6. Printed Content Canvas (Page Image Texture)
+    // 6. Full-Screen Canvas Texture (Printed Page & Fullscreen Hero Image)
     const canvas2d = document.createElement("canvas");
     const dpr2d = 2.0;
     canvas2d.width = Math.round(blockWidth * dpr2d);
@@ -252,10 +262,10 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     textTexture.generateMipmaps = false;
     stateRef.current.textTexture = textTexture;
 
-    // Load Devadas hero image for projection onto the hero shard!
+    // Load full-screen hero image requested by user!
     const heroImg = new Image();
     heroImg.crossOrigin = "anonymous";
-    heroImg.src = "/images/profile/devadas-portrait.jpg";
+    heroImg.src = "/images/profile/devadas-hero-full.jpg";
     heroImg.onload = () => {
       stateRef.current.heroImage = heroImg;
       drawPrintedCanvas();
@@ -269,94 +279,91 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
 
       ctx.clearRect(0, 0, cw, ch);
 
-      // Hero shard photo area (Cell A: Left side of panel)
-      // Print Devadas photograph on the glass hero shard with elegant dark gradients!
+      // FULL SCREEN HERO IMAGE DRAWING ACROSS SLAB
       if (stateRef.current.heroImage) {
         ctx.save();
         const img = stateRef.current.heroImage;
-        const photoWidth = cw * 0.42;
-        const photoHeight = ch * 0.76;
-        const photoX = cw * 0.03;
-        const photoY = ch * 0.14;
+        const imgRatio = img.width / img.height;
+        const canvasRatio = cw / ch;
 
-        // Rounded clipping area for photograph
-        ctx.beginPath();
-        const pradius = 24 * s;
-        ctx.moveTo(photoX + pradius, photoY);
-        ctx.arcTo(photoX + photoWidth, photoY, photoX + photoWidth, photoY + photoHeight, pradius);
-        ctx.arcTo(photoX + photoWidth, photoY + photoHeight, photoX, photoY + photoHeight, pradius);
-        ctx.arcTo(photoX, photoY + photoHeight, photoX, photoY, pradius);
-        ctx.arcTo(photoX, photoY, photoX + photoWidth, photoY, pradius);
-        ctx.closePath();
-        ctx.clip();
+        // Render full image covering or positioned on right-center with dark gradient integration
+        let drawW: number, drawH: number, drawX: number, drawY: number;
 
-        // Draw image
-        ctx.drawImage(img, photoX, photoY, photoWidth, photoHeight);
+        if (canvasRatio > 1.2) {
+          // Desktop landscape: Feature full portrait on the right half with seamless gradient bleed
+          drawH = ch * 0.98;
+          drawW = drawH * imgRatio;
+          drawX = cw - drawW - cw * 0.02;
+          drawY = (ch - drawH) / 2;
+        } else {
+          // Portrait/Tablet: Fill upper center
+          drawW = cw * 0.9;
+          drawH = drawW / imgRatio;
+          drawX = (cw - drawW) / 2;
+          drawY = ch * 0.08;
+        }
 
-        // Dark cinematic vignette overlay
-        const grad = ctx.createRadialGradient(
-          photoX + photoWidth * 0.5,
-          photoY + photoHeight * 0.5,
-          photoWidth * 0.2,
-          photoX + photoWidth * 0.5,
-          photoY + photoHeight * 0.5,
-          photoWidth * 0.7
-        );
-        grad.addColorStop(0, "rgba(8, 9, 13, 0.0)");
-        grad.addColorStop(0.7, "rgba(8, 9, 13, 0.4)");
-        grad.addColorStop(1, "rgba(8, 9, 13, 0.95)");
-        ctx.fillStyle = grad;
-        ctx.fillRect(photoX, photoY, photoWidth, photoHeight);
+        ctx.drawImage(img, drawX, drawY, drawW, drawH);
 
-        // Film badge overlay on image
-        ctx.fillStyle = "rgba(255, 107, 53, 0.85)";
-        ctx.font = `600 ${Math.max(12, 11 * s)}px Inter, sans-serif`;
-        ctx.fillText("MEESALA DEVADAS · LEAD EDITOR", photoX + 24 * s, photoY + photoHeight - 32 * s);
+        // Cinematic soft gradient overlay so text stays readable on left while image shines on right
+        const gradL = ctx.createLinearGradient(0, 0, cw * 0.65, 0);
+        gradL.addColorStop(0, "rgba(5, 5, 7, 0.95)");
+        gradL.addColorStop(0.5, "rgba(5, 5, 7, 0.7)");
+        gradL.addColorStop(1, "rgba(5, 5, 7, 0.0)");
+        ctx.fillStyle = gradL;
+        ctx.fillRect(0, 0, cw, ch);
+
+        const gradB = ctx.createLinearGradient(0, ch * 0.7, 0, ch);
+        gradB.addColorStop(0, "rgba(5, 5, 7, 0.0)");
+        gradB.addColorStop(1, "rgba(5, 5, 7, 0.85)");
+        ctx.fillStyle = gradB;
+        ctx.fillRect(0, ch * 0.7, cw, ch * 0.3);
+
         ctx.restore();
       }
 
-      // Panel Content Printed across the shards
-      const textLeft = cw * 0.42;
+      // Printed Content with Sora Font & Color Palette (#F5F5F5, #E0F1F1, #BCD6DB, #FF0000)
+      const textLeft = cw * 0.08;
 
       // 1. Eyebrow: "REAL-TIME MATERIAL STUDIO" / "REAL-TIME CINEMATIC STORYTELLER"
-      ctx.fillStyle = "rgba(255, 255, 255, 0.48)";
-      ctx.font = `600 ${Math.max(12, 12 * s)}px Inter, sans-serif`;
+      ctx.fillStyle = "#BCD6DB";
+      ctx.font = `600 ${Math.max(12, 12 * s)}px Sora, sans-serif`;
       ctx.letterSpacing = "0.22em";
-      ctx.fillText("MEESALA DEVADAS · CINEMATIC REALM", textLeft, ch * 0.22);
+      ctx.fillText("MEESALA DEVADAS · CINEMATIC REALM", textLeft, ch * 0.28);
       ctx.letterSpacing = "0px";
 
-      // 2. Headline: "Designed in glass." / "Every frame has a story."
-      const headlineSize = Math.max(26, Math.min(cw * 0.058, ch * 0.14));
-      ctx.font = `600 ${headlineSize}px Sora, Inter, sans-serif`;
-      const headlineGrad = ctx.createLinearGradient(0, ch * 0.26, 0, ch * 0.48);
-      headlineGrad.addColorStop(0, "#FFFFFF");
-      headlineGrad.addColorStop(0.5, "#E2E2E6");
-      headlineGrad.addColorStop(1, "#A0A0A8");
+      // 2. Headline: "Designed in glass. Every frame a story."
+      const headlineSize = Math.max(28, Math.min(cw * 0.055, ch * 0.13));
+      ctx.font = `700 ${headlineSize}px Sora, sans-serif`;
+      const headlineGrad = ctx.createLinearGradient(0, ch * 0.32, 0, ch * 0.52);
+      headlineGrad.addColorStop(0, "#F5F5F5");
+      headlineGrad.addColorStop(0.6, "#E0F1F1");
+      headlineGrad.addColorStop(1, "#BCD6DB");
       ctx.fillStyle = headlineGrad;
 
-      ctx.fillText("Designed in glass.", textLeft, ch * 0.33);
-      ctx.fillText("Every frame a story.", textLeft, ch * 0.33 + headlineSize * 1.05);
+      ctx.fillText("Designed in glass.", textLeft, ch * 0.38);
+      ctx.fillText("Every frame a story.", textLeft, ch * 0.38 + headlineSize * 1.05);
 
-      // 3. Subtitle: "Author dispersion, transmission, and refraction..."
-      ctx.fillStyle = "rgba(255, 255, 255, 0.62)";
+      // 3. Two-line subtitle
+      ctx.fillStyle = "rgba(224, 241, 241, 0.85)";
       const subSize = Math.max(14, 15 * s);
-      ctx.font = `400 ${subSize}px Inter, sans-serif`;
+      ctx.font = `400 ${subSize}px Sora, sans-serif`;
       ctx.fillText(
         "Visual Storyteller & Lead Video Editor. Crafting cinematic rhythm,",
         textLeft,
-        ch * 0.52
+        ch * 0.56
       );
       ctx.fillText(
         "DaVinci color science, and evocative narratives in the browser.",
         textLeft,
-        ch * 0.52 + subSize * 1.45
+        ch * 0.56 + subSize * 1.45
       );
 
-      // 4. "Open Studio / Explore Work" Light Pill (116 x 40 * S, radius 6)
-      const pillW = Math.max(120, 150 * s);
-      const pillH = Math.max(38, 44 * s);
+      // 4. "Open Studio / Explore Work" Light Pill (Turning #FF0000 on hover)
+      const pillW = Math.max(130, 160 * s);
+      const pillH = Math.max(40, 46 * s);
       const pillX = textLeft;
-      const pillY = ch * 0.67;
+      const pillY = ch * 0.71;
       const pradius = 8 * s;
 
       ctx.save();
@@ -367,32 +374,32 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       ctx.arcTo(pillX, pillY + pillH, pillX, pillY, pradius);
       ctx.arcTo(pillX, pillY, pillX + pillW, pillY, pradius);
       ctx.closePath();
-      ctx.fillStyle = "#FFFFFF";
+      ctx.fillStyle = "#FF0000";
       ctx.fill();
 
-      ctx.fillStyle = "#08090D";
-      ctx.font = `600 ${Math.max(13, 14 * s)}px Inter, sans-serif`;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = `600 ${Math.max(13, 14 * s)}px Sora, sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("Explore Work", pillX + pillW / 2, pillY + pillH / 2);
       ctx.restore();
 
       // 5. "Read paper →" / "Shatter Page →"
-      const linkX = pillX + pillW + 28 * s;
+      const linkX = pillX + pillW + 30 * s;
       const linkY = pillY + pillH / 2;
       ctx.save();
-      ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
-      ctx.font = `500 ${Math.max(13, 14 * s)}px Inter, sans-serif`;
+      ctx.fillStyle = "#E0F1F1";
+      ctx.font = `500 ${Math.max(13, 14 * s)}px Sora, sans-serif`;
       ctx.textBaseline = "middle";
       ctx.fillText("Shatter universe  →", linkX, linkY);
       ctx.restore();
 
-      // 6. Bottom tags: "© DEVADAS LAB" & "KHR_materials_dispersion"
-      ctx.fillStyle = "rgba(255, 255, 255, 0.38)";
-      ctx.font = `400 ${Math.max(10, 11 * s)}px Inter, sans-serif`;
-      ctx.fillText("© MEESALA DEVADAS · HYDERABAD", cw * 0.05, ch * 0.94);
+      // 6. Bottom tags: "© DEVADAS STUDIO" & "KHR_materials_dispersion"
+      ctx.fillStyle = "rgba(188, 214, 219, 0.6)";
+      ctx.font = `500 ${Math.max(10, 11 * s)}px Sora, sans-serif`;
+      ctx.fillText("© MEESALA DEVADAS · HYDERABAD", cw * 0.06, ch * 0.94);
       ctx.textAlign = "right";
-      ctx.fillText("PRORES_4K_DAVINCI_CINEMA", cw * 0.95, ch * 0.94);
+      ctx.fillText("4K_PRORES_DAVINCI_CINEMA", cw * 0.94, ch * 0.94);
       ctx.textAlign = "left";
 
       textTexture.needsUpdate = true;
@@ -401,7 +408,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     drawPrintedCanvas();
 
     // 7. Glass Geometry Builder & Cut Pattern
-    // Block partitioned into Nav Slab (10.8% height) + 14px Gap + Shard Panel (rest)
     const navHeight = blockHeight * 0.108;
     const gap = 14 * S;
     const panelHeight = blockHeight - navHeight - gap;
@@ -413,7 +419,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     scene.add(glassGroup);
     stateRef.current.glassGroup = glassGroup;
 
-    // Helper to create rounded polygon shape
     function createRoundedShape(points: THREE.Vector2[], radius: number): THREE.Shape {
       const shape = new THREE.Shape();
       const len = points.length;
@@ -441,7 +446,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       return shape;
     }
 
-    // Extrude Options
     const extrudeSettings: THREE.ExtrudeGeometryOptions = {
       depth: depth,
       bevelEnabled: true,
@@ -451,7 +455,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       bevelThickness: bevel
     };
 
-    // Construct Nav Slab
+    // Nav Slab
     const navHalfW = blockWidth / 2;
     const navHalfH = navHeight / 2;
     const navPts = [
@@ -466,7 +470,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     const navPosY = blockHeight / 2 - navHalfH;
     navMesh.position.set(0, navPosY, 0);
 
-    // Text plane for nav
     const navTextGeo = new THREE.PlaneGeometry(blockWidth, navHeight);
     const navTextMat = new THREE.MeshBasicMaterial({
       transparent: true,
@@ -478,7 +481,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
 
     glassGroup.add(navMesh);
 
-    // Track shard in state
     stateRef.current.shards.push({
       id: "nav",
       mesh: navMesh,
@@ -498,15 +500,11 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       stagger: 0.0
     });
 
-    // 8. The Live Cut Pattern: Five Shards (A, B, C, D, E)
-    // Coords relative to panel center:
+    // 8. Five Shards Cut Pattern (A, B, C, D, E)
     const panelHalfW = blockWidth / 2;
     const panelHalfH = panelHeight / 2;
     const panelCenterY = -blockHeight / 2 + panelHalfH;
 
-    // Normalised points:
-    // Top edges: .22, .515, .84; Bottom edges: .34, .865
-    // Inner junctions: J0 (.385, .72), J1 (.48, .62), J2 (.716, .49)
     function normToPanel(nx: number, ny: number) {
       return new THREE.Vector2(
         (nx - 0.5) * blockWidth,
@@ -531,25 +529,22 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     const J2 = normToPanel(0.716, 0.49);
 
     const cellDefs = [
-      { id: "A", pts: [TL, tAB, J0, bAD, BL], stagger: 0.05, velX: -350, velY: -200, velZ: 650 },
-      { id: "B", pts: [tAB, tBC, J1, J0], stagger: 0.09, velX: -100, velY: 380, velZ: 550 },
-      { id: "C", pts: [tBC, tCE, J2, J1], stagger: 0.12, velX: 200, velY: 320, velZ: 700 },
-      { id: "D", pts: [J0, J1, J2, bDE, bAD], stagger: 0.08, velX: -80, velY: -450, velZ: 750 },
-      { id: "E", pts: [tCE, TR, BR, bDE, J2], stagger: 0.15, velX: 420, velY: -150, velZ: 800 }
+      { id: "A", pts: [TL, tAB, J0, bAD, BL], stagger: 0.05, velX: -360, velY: -200, velZ: 650 },
+      { id: "B", pts: [tAB, tBC, J1, J0], stagger: 0.09, velX: -110, velY: 380, velZ: 550 },
+      { id: "C", pts: [tBC, tCE, J2, J1], stagger: 0.12, velX: 200, velY: 330, velZ: 700 },
+      { id: "D", pts: [J0, J1, J2, bDE, bAD], stagger: 0.08, velX: -90, velY: -450, velZ: 750 },
+      { id: "E", pts: [tCE, TR, BR, bDE, J2], stagger: 0.15, velX: 430, velY: -150, velZ: 800 }
     ];
 
     cellDefs.forEach((cell) => {
-      // Inset points slightly for gap
       const shape = createRoundedShape(cell.pts, cornerRadius);
       const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
 
-      // Generate UVs mapped to entire panel for seamless text and image refraction
       const posAttr = geo.attributes.position;
       const uvs = new Float32Array(posAttr.count * 2);
       for (let i = 0; i < posAttr.count; i++) {
         const x = posAttr.getX(i);
         const y = posAttr.getY(i);
-        // Map from panel space [-panelHalfW, panelHalfW] -> [0, 1]
         const u = (x + panelHalfW) / blockWidth;
         const v = (y + panelHalfH) / blockHeight;
         uvs[i * 2] = Math.max(0, Math.min(1, u));
@@ -560,7 +555,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       const mesh = new THREE.Mesh(geo, glassMaterial);
       mesh.position.set(0, panelCenterY, 0);
 
-      // Surface text mesh carrying the printed texture
+      // Printed surface text shape
       const textShapeGeo = new THREE.ShapeGeometry(shape);
       const textGeoPos = textShapeGeo.attributes.position;
       const textUVs = new Float32Array(textGeoPos.count * 2);
@@ -577,7 +572,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       const textMat = new THREE.MeshBasicMaterial({
         map: textTexture,
         transparent: true,
-        opacity: 0.94
+        opacity: 0.95
       });
       const textMesh = new THREE.Mesh(textShapeGeo, textMat);
       textMesh.position.set(0, 0, depth + bevel + 0.3);
@@ -585,7 +580,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
 
       glassGroup.add(mesh);
 
-      // Random tumble axis
       const rotAxis = new THREE.Vector3(
         (Math.random() - 0.5) * 2,
         (Math.random() - 0.5) * 2,
@@ -612,8 +606,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       });
     });
 
-    // 9. "← Back" Glass Sliver (Revealed in Shattered View)
-    // Outline: viewport fractions (.147,.243) (.252,.169) (.287,.277) (.151,.258), 11*k extrusion
+    // 9. "← Back" Glass Sliver (Viewport fractions: .147,.243 / .252,.169 / .287,.277 / .151,.258)
     const k = width / 1918;
     const sliverPts = [
       new THREE.Vector2((0.147 - 0.5) * width, (0.5 - 0.243) * height),
@@ -642,7 +635,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     const sliverMesh = new THREE.Mesh(sliverGeo, sliverMat);
     sliverMesh.position.set(0, 0, 80);
     sliverMesh.rotation.set(0.08, -0.16, 0);
-    sliverMesh.scale.set(0.001, 0.001, 0.001); // starts invisible
+    sliverMesh.scale.set(0.001, 0.001, 0.001);
     scene.add(sliverMesh);
 
     stateRef.current.backSliver = {
@@ -652,7 +645,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       isHovered: false
     };
 
-    // 10. Pointer Movement & Raycasting
+    // 10. Pointer Tracking & Raycasting
     const raycaster = new THREE.Raycaster();
     const mouseNorm = new THREE.Vector2(-999, -999);
 
@@ -666,7 +659,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
 
       mouseNorm.set(normX, normY);
 
-      // World point at z = 0
       const worldX = (normX * width) / 2;
       const worldY = (normY * height) / 2;
 
@@ -689,7 +681,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     window.addEventListener("mousemove", onPointerMove);
     window.addEventListener("mouseleave", onPointerLeave);
 
-    // Click handler for Three.js 3D objects (e.g. Back sliver)
     const onCanvasClick = (e: MouseEvent) => {
       if (stateRef.current.shattering || stateRef.current.reassembling) return;
       if (stateRef.current.shatterProgress > 0.8 && stateRef.current.backSliver?.isHovered) {
@@ -707,26 +698,25 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       const delta = Math.min(clock.getDelta(), 0.1);
       const elapsed = clock.getElapsedTime();
 
-      // Slow drift & particle movement
+      // Atmospheric rotation
       if (bgParticles) {
-        bgParticles.rotation.y = elapsed * 0.03;
-        bgParticles.rotation.x = Math.sin(elapsed * 0.05) * 0.05;
+        bgParticles.rotation.y = elapsed * 0.035;
+        bgParticles.rotation.x = Math.sin(elapsed * 0.06) * 0.05;
       }
       if (apertureRing) {
-        apertureRing.rotation.z = elapsed * 0.1;
+        apertureRing.rotation.z = elapsed * 0.12;
       }
 
-      // Pointer Raycast for Hover
+      // Pointer Raycast
       raycaster.setFromCamera(mouseNorm, camera);
       const meshesToTest = stateRef.current.shards.map((s) => s.mesh);
       if (stateRef.current.backSliver?.mesh.visible) {
         meshesToTest.push(stateRef.current.backSliver.mesh);
       }
       const intersects = raycaster.intersectObjects(meshesToTest, false);
-
       const hoveredMesh = intersects.length > 0 ? intersects[0].object : null;
 
-      // Handle Back Sliver Hover & Wobble
+      // Handle Back Sliver
       if (stateRef.current.backSliver) {
         const sliver = stateRef.current.backSliver;
         sliver.isHovered = hoveredMesh === sliver.mesh;
@@ -735,9 +725,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
 
         if (stateRef.current.shatterProgress > 0.5) {
           sliver.mesh.visible = true;
-          // Scale in smoothly
-          const targetScale = 1.0;
-          sliver.mesh.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), delta * 6);
+          sliver.mesh.scale.lerp(new THREE.Vector3(1, 1, 1), delta * 6);
           sliver.mesh.rotation.y = -0.16 + wobble + (sliver.isHovered ? 0.14 : 0);
           sliver.mesh.rotation.x = 0.08 + (sliver.isHovered ? 0.06 : 0);
         } else {
@@ -746,17 +734,15 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
         }
       }
 
-      // Global Tilt of Glass Group
-      // rotateY = x * 7° - 1.2°, rotateX = -y * 5.5° + 0.8°
+      // Global Tilt of Glass Group (rotateY = x·7° - 1.2°, rotateX = -y·5.5° + .8°)
       const p = stateRef.current.pointer;
       const targetTiltY = p.isInside ? (p.x * 7 - 1.2) * (Math.PI / 180) : -1.2 * (Math.PI / 180);
       const targetTiltX = p.isInside ? (-p.y * 5.5 + 0.8) * (Math.PI / 180) : 0.8 * (Math.PI / 180);
 
-      // Smooth with 0.3s exponential
       glassGroup.rotation.y += (targetTiltY - glassGroup.rotation.y) * Math.min(1, delta * 3.5);
       glassGroup.rotation.x += (targetTiltX - glassGroup.rotation.x) * Math.min(1, delta * 3.5);
 
-      // Handle Shatter / Reassemble Animation Progress
+      // Shatter / Reassemble Progress
       if (stateRef.current.shattering) {
         stateRef.current.shatterProgress = Math.min(1, stateRef.current.shatterProgress + delta / 0.72);
         if (stateRef.current.shatterProgress >= 1) {
@@ -775,7 +761,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       stateRef.current.shards.forEach((shard) => {
         shard.isHovered = hoveredMesh === shard.mesh && sp < 0.05;
 
-        // Glass iridescence & envMap boost on hover
+        // Hover sheen
         if (shard.isHovered) {
           glassMaterial.iridescence = THREE.MathUtils.lerp(glassMaterial.iridescence, 1.0, delta * 8);
           scene.environmentIntensity = THREE.MathUtils.lerp(scene.environmentIntensity, 1.9, delta * 6);
@@ -785,32 +771,27 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
         }
 
         if (sp > 0) {
-          // SHATTERED STATE: fly outward, downward + 420-800*S toward camera, gravity + tumble
-          // Ease-in cubic fly-off:
+          // SHATTERED STATE: ease-in cubic fly-off
           const staggeredP = Math.max(0, Math.min(1, (sp - shard.stagger) / (1 - shard.stagger)));
           const easeIn = staggeredP * staggeredP * staggeredP;
 
           const flightX = shard.initialPos.x + shard.shatterVel.x * easeIn * 2.2;
-          const flightY = shard.initialPos.y + shard.shatterVel.y * easeIn * 1.8 - 400 * S * easeIn * easeIn; // gravity
+          const flightY = shard.initialPos.y + shard.shatterVel.y * easeIn * 1.8 - 400 * S * easeIn * easeIn;
           const flightZ = shard.initialPos.z + shard.shatterVel.z * easeIn * 1.5;
 
           shard.mesh.position.set(flightX, flightY, flightZ);
 
-          // Tumble rotation
           const rotAngle = shard.shatterRotSpeed * easeIn * Math.PI;
           shard.mesh.quaternion.setFromAxisAngle(shard.shatterRotAxis, rotAngle);
         } else {
-          // NORMAL / HOVER STATE:
-          // Spring parameters: k = 170, c = 19
+          // NORMAL / HOVER SPRING PHYSICS: k = 170, c = 19
           const springK = 170;
           const dampingC = 19;
 
-          // Lift target: 50*S toward camera (nav 32*S)
           const targetLiftZ = shard.isHovered ? (shard.id === "nav" ? 32 * S : 50 * S) : 0;
           const targetTipX = shard.isHovered ? (p.y > 0 ? -0.15 : 0.15) : 0;
           const targetTipY = shard.isHovered ? (p.x > 0 ? 0.15 : -0.15) : 0;
 
-          // Spring physics integration
           const forceZ = (targetLiftZ - shard.currentPos.z) * springK - shard.velocity.z * dampingC;
           shard.velocity.z += forceZ * delta;
           shard.currentPos.z += shard.velocity.z * delta;
@@ -850,7 +831,6 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
 
     window.addEventListener("resize", handleResize);
 
-    // Save references
     stateRef.current.renderer = renderer;
     stateRef.current.scene = scene;
     stateRef.current.camera = camera;
@@ -868,14 +848,12 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
     };
   }, []);
 
-  // Shatter Trigger ("Shatter Universe" / "Read paper →")
   const handleShatter = () => {
     stateRef.current.shattering = true;
     stateRef.current.reassembling = false;
     setIsShattered(true);
   };
 
-  // Reassemble Trigger ("← Back")
   const handleReassemble = () => {
     stateRef.current.reassembling = true;
     stateRef.current.shattering = false;
@@ -883,28 +861,28 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-[#050507] select-none">
+    <section className="relative w-full h-screen overflow-hidden bg-[#050507] select-none font-sans">
       {/* Three.js Canvas Container */}
       <div ref={containerRef} className="absolute inset-0 z-0 cursor-default" />
 
-      {/* Top Floating Glass Nav Bar */}
-      <header className="absolute top-0 left-0 right-0 z-30 px-6 md:px-14 py-5 flex items-center justify-between pointer-events-none">
-        <div className="flex items-center gap-3 pointer-events-auto cursor-pointer group">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#20222a] to-[#121318] border border-white/15 flex items-center justify-center shadow-lg group-hover:border-[#FF6B35]/60 transition-all">
-            <span className="text-sm font-black text-white group-hover:text-[#FF6B35]">D</span>
+      {/* Top Floating Nav Bar */}
+      <header className="absolute top-0 left-0 right-0 z-30 px-6 md:px-14 py-6 flex items-center justify-between pointer-events-none font-sans">
+        <div className="flex items-center gap-3.5 pointer-events-auto cursor-pointer group">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1E2028] to-[#101217] border border-[#BCD6DB]/20 flex items-center justify-center shadow-lg group-hover:border-[#FF0000] transition-all">
+            <span className="text-sm font-black text-white group-hover:text-[#FF0000]">D</span>
           </div>
           <div>
-            <span className="font-display font-black tracking-widest text-white text-base md:text-lg">
+            <span className="font-display font-black tracking-wider text-white text-base md:text-lg">
               DEVADAS
             </span>
-            <span className="block text-[10px] tracking-wider text-muted-text font-mono uppercase">
+            <span className="block text-[10px] tracking-wider text-[#BCD6DB]/70 font-mono uppercase">
               STUDIO · HYDERABAD
             </span>
           </div>
         </div>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 pointer-events-auto">
+        <nav className="hidden md:flex items-center gap-9 pointer-events-auto">
           {[
             { label: "Showreel", href: "#projects" },
             { label: "Skills", href: "#skills" },
@@ -915,7 +893,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
             <a
               key={item.label}
               href={item.href}
-              className="text-xs font-medium tracking-wider text-white/65 hover:text-white transition-colors duration-200"
+              className="text-xs font-semibold tracking-wider text-[#BCD6DB]/80 hover:text-white transition-colors duration-200"
             >
               {item.label}
             </a>
@@ -929,25 +907,25 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
               const contactEl = document.getElementById("contact");
               if (contactEl) contactEl.scrollIntoView({ behavior: "smooth" });
             }}
-            className="px-5 py-2 rounded-full text-xs font-semibold tracking-wider bg-white/10 hover:bg-[#FF6B35] text-white border border-white/15 hover:border-[#FF6B35] transition-all duration-300 shadow-md hover:shadow-[#FF6B35]/25"
+            className="px-5 py-2.5 rounded-full text-xs font-bold tracking-wider bg-[#FF0000] hover:bg-[#E60000] text-white border border-[#FF0000] transition-all duration-300 shadow-lg shadow-[#FF0000]/30"
           >
             Hire Devadas
           </button>
         </div>
       </header>
 
-      {/* Interactive Overlay Action Buttons (Overlaid on the Glass Shards) */}
+      {/* Interactive Overlay Action Buttons */}
       {!isShattered && (
-        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-end pb-16 md:pb-20 px-8 md:px-20">
+        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-end pb-16 md:pb-20 px-8 md:px-20 font-sans">
           <div className="max-w-6xl mx-auto w-full flex flex-wrap items-center justify-between gap-6 pointer-events-auto">
-            {/* Quick Stats / Info Badges */}
-            <div className="flex items-center gap-6 text-xs text-white/50 font-mono">
+            {/* Quick Badges */}
+            <div className="flex items-center gap-6 text-xs text-[#BCD6DB]/70 font-mono">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#36d67e] animate-pulse" />
-                <span className="text-white/80">Available For Work</span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#FF0000] animate-pulse" />
+                <span className="text-white font-medium">Available For Productions</span>
               </div>
               <span className="hidden sm:inline">|</span>
-              <span className="hidden sm:inline text-white/60">DaVinci Resolve · Premiere Pro</span>
+              <span className="hidden sm:inline text-[#BCD6DB]">DaVinci Resolve · Premiere Pro · CapCut</span>
             </div>
 
             {/* Direct Interaction Buttons */}
@@ -963,7 +941,7 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
                 }}
                 onMouseEnter={() => setHoveredButton("explore")}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="group relative px-6 py-3 rounded-xl font-medium text-xs tracking-wider uppercase transition-all duration-300 shadow-lg flex items-center gap-2 bg-[#ffffff] hover:bg-[#36d67e] text-[#08090D] hover:shadow-[#36d67e]/40"
+                className="group relative px-7 py-3 rounded-xl font-bold text-xs tracking-wider uppercase transition-all duration-300 shadow-xl flex items-center gap-2 bg-[#FF0000] hover:bg-[#E60000] text-white shadow-[#FF0000]/35 hover:-translate-y-0.5"
               >
                 <Play className="w-3.5 h-3.5 fill-current" />
                 <span>Explore Showcase</span>
@@ -973,23 +951,23 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
                 onClick={handleShatter}
                 onMouseEnter={() => setHoveredButton("shatter")}
                 onMouseLeave={() => setHoveredButton(null)}
-                className="group relative px-6 py-3 rounded-xl font-medium text-xs tracking-wider text-white hover:text-[#b9abff] border border-white/20 hover:border-[#b9abff]/50 bg-white/5 hover:bg-[#b9abff]/10 backdrop-blur-md transition-all duration-300 flex items-center gap-2"
+                className="group relative px-7 py-3 rounded-xl font-semibold text-xs tracking-wider text-white hover:text-[#BCD6DB] border border-[#BCD6DB]/30 hover:border-[#BCD6DB] bg-white/5 hover:bg-[#BCD6DB]/10 backdrop-blur-md transition-all duration-300 flex items-center gap-2 hover:-translate-y-0.5"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#b9abff]" />
-                <span>Shatter Page →</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#FF0000]" />
+                <span>Shatter Universe →</span>
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* SHATTERED VIEW: 5 Cinema Principles View (fades in when shattered) */}
+      {/* SHATTERED VIEW: 5 Cinema Principles View */}
       {isShattered && (
-        <div className="absolute inset-0 z-30 pointer-events-auto bg-[#050507]/92 backdrop-blur-md flex flex-col justify-center items-center px-6 md:px-12 animate-in fade-in duration-500">
+        <div className="absolute inset-0 z-30 pointer-events-auto bg-[#050507]/94 backdrop-blur-md flex flex-col justify-center items-center px-6 md:px-12 animate-in fade-in duration-500 font-sans">
           {/* Back Button Floating Sliver */}
           <button
             onClick={handleReassemble}
-            className="absolute top-24 left-8 md:left-24 px-5 py-2.5 rounded-full border border-white/20 bg-white/10 hover:bg-[#b9abff]/20 hover:border-[#b9abff] text-white hover:text-[#b9abff] text-xs font-semibold tracking-wider flex items-center gap-2 transition-all duration-300 shadow-xl group"
+            className="absolute top-24 left-8 md:left-24 px-5 py-2.5 rounded-full border border-[#BCD6DB]/30 bg-white/10 hover:bg-[#BCD6DB]/20 hover:border-[#BCD6DB] text-white hover:text-[#E0F1F1] text-xs font-bold tracking-wider flex items-center gap-2 transition-all duration-300 shadow-xl group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span>← Reassemble Glass</span>
@@ -997,33 +975,33 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
 
           <div className="max-w-3xl w-full mx-auto space-y-8">
             <div className="space-y-2">
-              <span className="text-[11px] font-mono tracking-widest text-[#FF6B35] uppercase">
+              <span className="text-[11px] font-mono tracking-widest text-[#FF0000] uppercase font-bold">
                 Facet Material Studio · Cinema Edition
               </span>
               <h2 className="text-2xl md:text-4xl font-display font-bold text-white tracking-tight">
-                Real-Time Cinema, in Five Principles.
+                Real-Time Glass & Cinema, in Five Principles.
               </h2>
             </div>
 
             {/* Principles List */}
-            <div className="space-y-5">
+            <div className="space-y-4">
               {PORTFOLIO_DATA.principlesView.map((item, idx) => (
                 <div
                   key={item.term}
                   onMouseEnter={() => setActiveTermIndex(idx)}
                   className={`p-4 md:p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
                     activeTermIndex === idx
-                      ? "bg-white/[0.08] border-[#FF6B35]/50 shadow-lg shadow-[#FF6B35]/10"
-                      : "bg-white/[0.02] border-white/5 hover:border-white/15"
+                      ? "bg-white/[0.08] border-[#FF0000]/60 shadow-lg shadow-[#FF0000]/15"
+                      : "bg-white/[0.02] border-white/10 hover:border-white/20"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-[#FF6B35]">0{idx + 1}</span>
+                    <span className="text-xs font-mono font-bold text-[#FF0000]">0{idx + 1}</span>
                     <h3 className="text-base md:text-lg font-bold text-white">
-                      {item.term} <span className="font-normal text-white/50">— {item.subtitle}</span>
+                      {item.term} <span className="font-normal text-[#BCD6DB]/70">— {item.subtitle}</span>
                     </h3>
                   </div>
-                  <p className="mt-2 text-xs md:text-sm text-white/70 leading-relaxed font-sans pl-7">
+                  <p className="mt-2 text-xs md:text-sm text-[#E0F1F1]/80 leading-relaxed font-sans pl-7">
                     {item.text}
                   </p>
                 </div>
@@ -1031,12 +1009,12 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-white/10">
-              <span className="text-xs text-white/40 font-mono">
-                Click "Reassemble Glass" to restore the hero slab
+              <span className="text-xs text-[#BCD6DB]/50 font-mono">
+                Click &ldquo;Reassemble Glass&rdquo; to restore the hero slab
               </span>
               <button
                 onClick={handleReassemble}
-                className="text-xs font-medium text-[#b9abff] hover:underline"
+                className="text-xs font-semibold text-[#FF0000] hover:underline"
               >
                 Done Reading →
               </button>
@@ -1046,14 +1024,15 @@ export default function FacetGlassHero({ onExploreClick, onOpenProjectModal }: F
       )}
 
       {/* Bottom Scroll Prompt */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 text-white/40 hover:text-white/80 transition-colors cursor-pointer pointer-events-auto"
+      <div
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 text-[#BCD6DB]/50 hover:text-white transition-colors cursor-pointer pointer-events-auto"
         onClick={() => {
           const el = document.getElementById("about");
           if (el) el.scrollIntoView({ behavior: "smooth" });
         }}
       >
         <span className="text-[10px] tracking-widest font-mono uppercase">Scroll To Explore</span>
-        <ChevronDown className="w-4 h-4 animate-bounce" />
+        <ChevronDown className="w-4 h-4 animate-bounce text-[#FF0000]" />
       </div>
     </section>
   );
