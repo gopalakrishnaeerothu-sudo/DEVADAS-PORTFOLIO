@@ -1,0 +1,230 @@
+/* Static page skeleton, same structure as the RamaRaju index.html.
+   public/js/main.js and public/js/hero.js fill it from public/js/data.js. */
+
+const SUN = `<svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
+const MOON = `<svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>`;
+const LINKS = `<a href="#about">About</a><a href="#work">Work</a><a href="#craft">Craft</a><a href="#tools">Tools</a><a href="#process">Process</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>`;
+
+export const MARKUP = `
+  <!-- particle background for the sections below the hero -->
+  <canvas id="bg3d"></canvas>
+
+  <!-- compact nav that appears once you scroll past the hero -->
+  <header class="topbar" id="topbar">
+    <a href="#home" class="tb-logo">MD<span>.</span></a>
+    <nav class="tb-links">${LINKS}</nav>
+    <button type="button" class="theme-toggle tb-toggle" data-theme-toggle aria-label="Switch theme">${SUN}${MOON}</button>
+  </header>
+
+  <!-- ============================ HERO STAGE ============================ -->
+  <section class="stage" id="home">
+    <div class="bg"></div>
+    <div class="stars" id="stA"></div>
+    <div class="stars" id="stB"></div>
+
+    <div class="canvas" id="canvas">
+      <div class="stack">
+        <nav class="nav" id="nav">
+          <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="sw" x1="8" y1="8" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#8ef4ff"/><stop offset=".5" stop-color="#35d8ff"/><stop offset="1" stop-color="#0a86d8"/>
+              </linearGradient>
+              <linearGradient id="sw2" x1="40" y1="10" x2="10" y2="40" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#a6f7ff"/><stop offset="1" stop-color="#0f9ae0" stop-opacity=".25"/>
+              </linearGradient>
+            </defs>
+            <g transform="rotate(-32 24 24)">
+              <ellipse cx="24" cy="24" rx="18.5" ry="9.6" stroke="url(#sw2)" stroke-width="3.1" stroke-linecap="round" stroke-dasharray="58 30" stroke-dashoffset="14"/>
+              <circle cx="41.4" cy="20.6" r="3.1" fill="#bff6ff"/>
+            </g>
+            <circle cx="24" cy="24" r="6.6" fill="url(#sw)"/>
+            <circle cx="24" cy="24" r="2.6" fill="#fff"/>
+          </svg>
+          <a href="#home" class="wm"><span class="kick" id="wmKick">PORTFOLIO</span><span class="name" id="wmName">MD</span></a>
+          <button type="button" class="theme-toggle nav-toggle" data-theme-toggle aria-label="Switch theme">${SUN}${MOON}</button>
+          <button type="button" class="burger" id="burger" aria-label="Opens menu" aria-expanded="false" aria-controls="navmenu"><span></span><span></span><span></span></button>
+          <div class="navmenu" id="navmenu">
+            <div class="links" id="links">${LINKS}</div>
+            <a href="#contact" class="btn" id="navCta"><span id="ctaLabel">Get in touch</span></a>
+          </div>
+        </nav>
+
+        <h1 class="h1 l1 hi" id="h1a"></h1>
+        <p class="sub s1" id="sub1"></p>
+        <p class="sub s2" id="sub2"></p>
+        <a href="#work" class="btn cta2" id="cta2"><span id="vpLabel"></span></a>
+      </div>
+
+      <div class="showcase">
+        <div class="ring" id="ring"></div>
+
+        <!-- Opening portrait: stands in front of the 3D wheel and follows the cursor -->
+        <div class="portrait" id="portrait">
+          <div class="pt-magnet" id="ptMagnet">
+            <div class="pt-glow"></div>
+            <img id="ptImg" alt="Devadas" draggable="false" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a class="wa" id="wa" href="#contact" aria-label="WhatsApp" target="_blank" rel="noopener">
+      <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16.04 3C9.4 3 4 8.36 4 14.96c0 2.3.66 4.46 1.8 6.3L4 29l7.96-1.76A12.1 12.1 0 0 0 16.04 27C22.68 27 28 21.6 28 15S22.68 3 16.04 3Zm0 21.8c-1.86 0-3.62-.5-5.14-1.38l-.36-.22-4.72 1.04 1.06-4.56-.24-.38a9.78 9.78 0 0 1-1.5-5.34c0-5.42 4.44-9.84 9.9-9.84s9.84 4.42 9.84 9.84-4.4 10.84-8.84 10.84Zm5.4-7.34c-.3-.14-1.76-.86-2.02-.96-.28-.1-.48-.14-.68.14-.2.3-.78.96-.96 1.16-.18.2-.36.22-.66.08-.3-.14-1.26-.46-2.4-1.48-.88-.8-1.48-1.76-1.66-2.06-.18-.3-.02-.46.14-.6.12-.14.3-.36.44-.54.14-.18.2-.3.3-.5.1-.2.04-.38-.02-.52-.08-.14-.68-1.62-.92-2.22-.24-.58-.5-.5-.68-.5h-.58c-.2 0-.52.08-.8.38-.28.3-1.04 1.02-1.04 2.5 0 1.46 1.06 2.88 1.22 3.08.14.2 2.1 3.2 5.08 4.48.7.3 1.26.5 1.7.62.7.22 1.36.2 1.86.12.58-.08 1.76-.72 2-1.42.26-.7.26-1.3.18-1.42-.08-.12-.28-.2-.58-.34Z"/></svg>
+    </a>
+  </section>
+
+  <main>
+    <!-- ABOUT -->
+    <section id="about" class="section" data-shape="1">
+      <div class="about-grid">
+        <div class="about-photo reveal tilt" id="aboutCine">
+          <div class="cine">
+            <img id="aboutPhoto" alt="Meesala Devadas editing on set" />
+            <div class="cine-spot"></div>
+            <div class="cine-grain"></div>
+            <div class="cine-scan"></div>
+            <span class="cine-tag">REC ●</span>
+          </div>
+        </div>
+        <div class="about-text reveal">
+          <p class="eyebrow">About</p>
+          <h2 class="section-title">Every frame.<br /><em>One story.</em></h2>
+          <div id="bio"></div>
+          <dl class="facts" id="facts"></dl>
+          <div class="quals">
+            <p class="quals-title">Training</p>
+            <ol class="quals-list" id="quals"></ol>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>25+</strong><span>Films &amp; Reels</span></div>
+            <div class="stat"><strong id="statTools">0</strong><span>Pro Tools</span></div>
+            <div class="stat"><strong>✂️</strong><span>Editor</span></div>
+            <div class="stat"><strong>🎥</strong><span>Cinematographer</span></div>
+            <div class="stat"><strong>🎨</strong><span>Colorist</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D FILM STRIPS -->
+    <section class="strip-section" aria-label="Photo film strip" data-shape="1">
+      <div class="filmstrip"><div class="strip-track" id="stripTrack"></div></div>
+      <div class="filmstrip reverse"><div class="strip-track" id="stripTrack2"></div></div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work" class="section" data-shape="2">
+      <div class="section-head reveal">
+        <p class="eyebrow">Selected Work</p>
+        <h2 class="section-title">On <em>Screen</em></h2>
+        <p class="section-sub">Click a card for the story behind the edit and to watch the film.</p>
+      </div>
+      <div class="films-grid" id="filmsGrid"></div>
+      <div class="awards reveal">
+        <h3 class="short-title">Work <em>Experience</em></h3>
+        <div class="craft-grid" id="experience"></div>
+      </div>
+    </section>
+
+    <!-- THE CRAFT -->
+    <section id="craft" class="section" data-shape="1">
+      <div class="section-head reveal">
+        <p class="eyebrow">The Craft</p>
+        <h2 class="section-title">Felt in the <em>cut</em>.<br />Seen in the <em>colour</em>.</h2>
+        <p class="section-sub">An editor who finds the rhythm, a cinematographer who shapes the light, and a colorist and sound designer who gives every frame its mood.</p>
+      </div>
+      <div class="craft-grid" id="craftGrid"></div>
+    </section>
+
+    <!-- SOFTWARE TOOLS -->
+    <section id="tools" class="section" data-shape="4">
+      <div class="section-head reveal">
+        <p class="eyebrow">Post-Production Suite</p>
+        <h2 class="section-title">Tools of the <em>Trade</em></h2>
+        <p class="section-sub">Industry-standard software for editing, colour, motion graphics and sound, from first assembly to final master.</p>
+      </div>
+      <div class="sports-grid" id="toolsGrid"></div>
+      <div class="sports-badge-note reveal">
+        <div class="sports-note-card">
+          <span class="sports-note-icon">🎬</span>
+          <div>
+            <strong>End-to-End Production Pipeline</strong>
+            <p>From treatment and lighting setup on set to the final colour grade and sound mix, Devadas handles the whole journey of a film, so the story keeps one voice from the first frame to the last.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="section" data-shape="3">
+      <div class="section-head reveal">
+        <p class="eyebrow">Creative Process</p>
+        <h2 class="section-title">Idea. Frame. <em>Rhythm.</em></h2>
+        <p class="section-sub" id="processIntro"></p>
+      </div>
+      <div class="yoga-grid" id="processGrid"></div>
+      <div class="yoga-cta reveal">
+        <a href="#contact" class="btn btn-flow"><span>Start a project</span></a>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="section" data-shape="4">
+      <div class="section-head reveal">
+        <p class="eyebrow">Gallery</p>
+        <h2 class="section-title">Moments in <em>Frame</em></h2>
+        <p class="section-sub">Drag to spin. Click a photo to enlarge.</p>
+      </div>
+      <div class="carousel-stage reveal" id="carouselStage">
+        <div class="carousel" id="carousel"></div>
+      </div>
+      <div class="carousel-controls">
+        <button class="round-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+        <button class="round-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+      </div>
+      <h3 class="short-title gallery-all-title reveal">All <em>photos</em></h3>
+      <div class="sets-grid" id="galleryGrid"></div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact" data-shape="0">
+      <div class="contact-card reveal">
+        <p class="eyebrow">Contact</p>
+        <h2 class="section-title">Let's <em>Create</em></h2>
+        <p class="section-sub">For commercials, music videos, short films, wedding films and creator content.</p>
+        <div class="contact-links" id="contactLinks"></div>
+      </div>
+      <p class="credit-line" id="credits"></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Meesala Devadas · Video Editor · Cinematographer · Visual Storyteller</p>
+  </footer>
+
+  <!-- Project modal -->
+  <div class="modal" id="movieModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-box">
+      <button class="modal-close" data-close aria-label="Close">&times;</button>
+      <div class="modal-poster"><img id="mPoster" alt="" /></div>
+      <div class="modal-info">
+        <p class="eyebrow" id="mMeta"></p>
+        <h3 id="mTitle"></h3>
+        <p class="m-role" id="mRole"></p>
+        <div class="film-tags" id="mTags"></div>
+        <p id="mDesc"></p>
+        <a id="mLink" class="btn btn-flow" target="_blank" rel="noopener"><span>▶ Watch now</span></a>
+        <p class="m-nolink" id="mNoLink">Watch link coming soon</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="modal-close" data-close aria-label="Close">&times;</button>
+    <img id="lbImg" alt="" />
+    <p id="lbCaption"></p>
+  </div>
+`;

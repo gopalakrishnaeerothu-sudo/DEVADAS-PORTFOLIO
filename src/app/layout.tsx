@@ -1,18 +1,11 @@
-import type { Metadata } from "next";
-import { Sora } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-  weight: ["300", "400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "MEESALA DEVADAS — Creative Video Editor & Cinematographer",
+  metadataBase: new URL("https://devadas-portfolio.vercel.app"),
+  title: "Meesala Devadas | Video Editor, Cinematographer & Visual Storyteller",
   description:
-    "Official 3D creative portfolio of Meesala Devadas, Video Editor, Cinematographer, and Visual Storyteller. Specializing in DaVinci Resolve color grading, commercial films, music videos, and cinematic narratives.",
+    "Official portfolio of Meesala Devadas: video editor, cinematographer and colorist from Hyderabad / Nidadavole. Commercials, music videos, short films, wedding films and cinematography reels.",
   keywords: [
     "Meesala Devadas",
     "Devadas Video Editor",
@@ -23,29 +16,46 @@ export const metadata: Metadata = {
     "Adobe Premiere Pro",
     "CapCut Video Editor",
     "Nidadavole",
-    "editor_of_nidadavole"
+    "editor_of_nidadavole",
   ],
   authors: [{ name: "Meesala Devadas" }],
   openGraph: {
-    title: "MEESALA DEVADAS — Creative Video Editor & Cinematographer",
-    description: "Every Frame Has a Story. I Bring It to Life.",
+    title: "Meesala Devadas | Video Editor & Cinematographer",
+    description: "Every frame has a story. I bring it to life.",
     url: "https://devadas-portfolio.vercel.app",
-    siteName: "Devadas Studio",
+    siteName: "Devadas Portfolio",
     locale: "en_US",
     type: "website",
+    images: ["/images/profile/devadas-poster.jpg"],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
+// Same boot script as the RamaRaju site: restore the saved theme and hold the
+// hero in its entrance start state until hero.js plays the intro timeline.
+const BOOT = `(function(){var t='dark';try{t=localStorage.getItem('md-theme')||'dark';}catch(e){}document.documentElement.setAttribute('data-theme',t);})();
+document.documentElement.classList.add('intro');
+setTimeout(function(){document.documentElement.classList.remove('intro');},4000);`;
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${sora.variable} scroll-smooth font-sans`}>
-      <body className="bg-[#050507] text-[#F5F5F5] font-sans antialiased selection:bg-[#FF0000] selection:text-white overflow-x-hidden">
-        {children}
-      </body>
+    <html lang="en-US" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+          rel="stylesheet"
+        />
+        <script dangerouslySetInnerHTML={{ __html: BOOT }} />
+      </head>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
