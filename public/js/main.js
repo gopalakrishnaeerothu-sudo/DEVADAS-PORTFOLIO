@@ -35,29 +35,14 @@
   /* ---------------------------------------------------------------
      Fill page content from data.js
      --------------------------------------------------------------- */
-  $("#processIntro").textContent = SITE.processIntro;
   $("#year").textContent = new Date().getFullYear();
   setImg($("#aboutPhoto"), SITE.aboutPhoto, SITE.name, 400, 500);
   $("#bio").innerHTML = SITE.bio.map((p) => `<p>${esc(p)}</p>`).join("");
-  $("#statTools").textContent = TOOLS.length;
   $("#facts").innerHTML = FACTS.filter((f) => f.value)
     .map((f) => `<div class="fact"><dt>${esc(f.label)}</dt><dd>${esc(f.value)}</dd></div>`).join("");
 
-  // Training
-  $("#quals").innerHTML = QUALIFICATIONS.map((q) => `<li><strong>${esc(q.title)}</strong><span>${esc(q.type)}</span></li>`).join("");
-
-  // Experience (craft-card style)
-  $("#experience").innerHTML = EXPERIENCE.map((x, i) => `
-    <article class="craft-card reveal" style="transition-delay:${i * 0.1}s;text-align:left">
-      <span class="craft-icon">${esc(x.icon)}</span>
-      <h3>${esc(x.role)}</h3>
-      <span class="exp-meta">${esc(x.period)}</span>
-      <p>${esc(x.company)}</p>
-      <ul>${x.points.map((p) => `<li>${esc(p)}</li>`).join("")}</ul>
-    </article>`).join("");
-
-  // The Craft: editor / cinematographer / colour & sound
-  $("#craftGrid").innerHTML = CRAFT.map((c, i) => `
+  // Range: the kinds of characters he plays
+  $("#rangeGrid").innerHTML = RANGE.map((c, i) => `
     <article class="craft-card reveal" style="transition-delay:${i * 0.1}s">
       <span class="craft-icon">${esc(c.icon)}</span>
       <h3>${esc(c.title)}</h3>
@@ -89,31 +74,50 @@
     galleryGrid.appendChild(fig);
   });
 
-  // shared with hero.js
-  window.RK = { esc, setImg, placeholder, openMovie: (m) => openMovie(m) };
+  // Lookbook: photo cards with a title + story, filterable by category
+  const lbGrid = $("#lookbookGrid");
+  if (lbGrid && typeof LOOKBOOK !== "undefined") {
+    const cats = typeof LOOKBOOK_CATS !== "undefined" ? LOOKBOOK_CATS : [];
+    const catLabel = (id) => (cats.find((c) => c.id === id) || {}).label || "";
+    LOOKBOOK.forEach((p, i) => {
+      const card = document.createElement("figure");
+      card.className = "lb-card reveal";
+      card.dataset.cat = p.cat || "";
+      card.style.transitionDelay = (i % 3) * 0.08 + "s";
+      card.innerHTML = `
+        <div class="lb-photo"><img alt="${esc(p.title)}" loading="lazy" decoding="async"><span class="lb-num">${String(i + 1).padStart(2, "0")}</span></div>
+        <figcaption>
+          <span class="lb-cat">${esc(catLabel(p.cat))}</span>
+          <h3>${esc(p.title)}</h3>
+          <p>${esc(p.note)}</p>
+        </figcaption>`;
+      const im = $("img", card);
+      im.addEventListener("error", () => card.remove(), { once: true });
+      im.src = p.src;
+      $(".lb-photo", card).addEventListener("click", () => openLightbox(p.src, p.title + " · " + p.note));
+      lbGrid.appendChild(card);
+    });
+    const filters = $("#lbFilters");
+    filters.innerHTML = [{ id: "all", label: "All" }, ...cats]
+      .map((c, i) => `<button type="button" role="tab" class="lb-chip${i ? "" : " on"}" data-cat="${esc(c.id)}" aria-selected="${i ? "false" : "true"}">${esc(c.label)}</button>`)
+      .join("");
+    filters.addEventListener("click", (e) => {
+      const btn = e.target.closest(".lb-chip");
+      if (!btn) return;
+      filters.querySelectorAll(".lb-chip").forEach((b) => {
+        const on = b === btn;
+        b.classList.toggle("on", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      const cat = btn.dataset.cat;
+      lbGrid.querySelectorAll(".lb-card").forEach((c) => {
+        c.hidden = cat !== "all" && c.dataset.cat !== cat;
+      });
+    });
+  }
 
-  /* ---------------------------------------------------------------
-     Work (project poster cards)
-     --------------------------------------------------------------- */
-  const grid = $("#filmsGrid");
-  MOVIES.forEach((m, idx) => {
-    const card = document.createElement("article");
-    card.className = "film-card reveal";
-    card.style.transitionDelay = (idx % 4) * 0.08 + "s";
-    card.innerHTML = `
-      <div class="film-poster"><img loading="lazy" /></div>
-      ${m.year ? `<span class="film-year">${esc(m.year)}</span>` : ""}
-      ${m.link ? `<span class="film-play" title="Watch available">▶</span>` : ""}
-      <div class="film-info">
-        <h3>${esc(m.title)}</h3>
-        <p>${esc([m.genre, m.duration].filter(Boolean).join(" · "))}</p>
-      </div>
-      <div class="film-shine"></div>`;
-    setImg($("img", card), m.poster, m.title, 400, 600);
-    card.addEventListener("click", () => openMovie(m));
-    addTilt(card, 14);
-    grid.appendChild(card);
-  });
+  // shared with hero.js
+  window.RK = { esc, setImg, placeholder };
 
   function addTilt(el, max) {
     if (isMobile || reduceMotion) return;
@@ -128,64 +132,18 @@
   }
   document.querySelectorAll(".tilt").forEach((el) => addTilt(el, 8));
 
-  // Project modal
-  const modal = $("#movieModal");
-  function openMovie(m) {
-    setImg($("#mPoster"), m.poster, m.title, 400, 600);
-    $("#mTitle").textContent = m.title;
-    $("#mMeta").textContent = [m.year, m.genre, m.duration].filter(Boolean).join(" · ");
-    $("#mRole").textContent = m.role || "";
-    $("#mTags").innerHTML = (m.tags || []).map((t) => `<i>${esc(t)}</i>`).join("");
-    $("#mDesc").textContent = (m.description || "") + (m.tools ? "  Tools: " + m.tools + "." : "");
-    const link = $("#mLink"), noLink = $("#mNoLink");
-    if (m.link) { link.href = m.link; link.style.display = ""; noLink.style.display = "none"; }
-    else { link.style.display = "none"; noLink.style.display = ""; }
-    modal.classList.add("open");
-    modal.setAttribute("aria-hidden", "false");
-  }
-
-  /* ---------------------------------------------------------------
-     Software tools (same card grid as the RamaRaju sports section)
-     --------------------------------------------------------------- */
-  $("#toolsGrid").innerHTML = TOOLS.map((t, i) => `
-    <article class="sport-card reveal" style="transition-delay:${(i % 4) * 0.07}s">
-      <div class="sport-header">
-        <div class="sport-frame"><span class="tool-mono" style="--tc:${esc(t.color)}">${esc(t.mono)}</span></div>
-        <span class="sport-num">${String(i + 1).padStart(2, "0")}</span>
-      </div>
-      <h3 class="sport-name">${esc(t.name)}</h3>
-      <span class="sport-role">${esc(t.level)}</span>
-      <p class="sport-desc">${esc(t.desc)}</p>
-      <div class="tool-bar" title="${t.proficiency}%"><i style="--p:${t.proficiency}%"></i></div>
-    </article>`).join("");
-
-  /* ---------------------------------------------------------------
-     Creative process
-     --------------------------------------------------------------- */
-  $("#processGrid").innerHTML = PROCESS.map((s, i) => `
-    <div class="yoga-card reveal" style="transition-delay:${i * 0.1}s">
-      <span class="yoga-icon">${esc(s.icon)}</span>
-      <h3>${esc(s.title)}</h3>
-      <p>${esc(s.text)}</p>
-    </div>`).join("");
-
-  // Image credits for freely licensed title images
-  if (typeof CREDITS !== "undefined" && CREDITS.length) {
-    $("#credits").innerHTML = "Title images: " + CREDITS.map((c) =>
-      `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.label)}</a> (${esc(c.license)})`).join(" · ");
-  }
-
   /* ---------------------------------------------------------------
      Gallery: 3D carousel
      --------------------------------------------------------------- */
   const carousel = $("#carousel");
   const stage = $("#carouselStage");
   const lightbox = $("#lightbox");
-  const n = GALLERY.length;
+  const SPIN = typeof CAROUSEL !== "undefined" && CAROUSEL.length ? CAROUSEL : GALLERY;
+  const n = SPIN.length;
   const step = 360 / Math.max(n, 1);
   let rot = 0, targetRot = 0, dragging = false, dragMoved = false, lastX = 0, hovering = false;
 
-  GALLERY.forEach((g) => {
+  SPIN.forEach((g) => {
     const fig = document.createElement("figure");
     fig.className = "carousel-item";
     fig.innerHTML = `<img />${g.caption ? `<figcaption>${esc(g.caption)}</figcaption>` : ""}`;
@@ -306,7 +264,7 @@
      Modals, nav, reveal
      --------------------------------------------------------------- */
   function closeAll() {
-    [modal, lightbox].forEach((m) => { m.classList.remove("open"); m.setAttribute("aria-hidden", "true"); });
+    [lightbox].forEach((m) => { m.classList.remove("open"); m.setAttribute("aria-hidden", "true"); });
   }
   document.querySelectorAll("[data-close]").forEach((b) => b.addEventListener("click", closeAll));
   lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeAll(); });

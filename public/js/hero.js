@@ -61,11 +61,11 @@
     { v: "shop", url: P() },
     { v: "brand", url: P() },
     { v: "frete", url: P() },
-    { v: "plain", url: P(), t: "THE EDITOR" },
+    { v: "plain", url: P(), t: "THE ACTOR" },
     { v: "power", url: P() },
-    { v: "plain", url: P(), t: "CINEMATOGRAPHER" },
+    { v: "plain", url: P(), t: "IN CHARACTER" },
     { v: "off", url: P() },
-    { v: "plain", url: P(), t: "ON SET" }
+    { v: "plain", url: P(), t: "ON CAMERA" }
   ];
 
   function creative(d) {
@@ -79,44 +79,43 @@
             <path d="M2 42h30M14 30v96M4 100l26-16"/>
             <path d="M96 34v58M120 34v58M96 92q12 15 24 0"/>
             <path d="M92 108l14 34M126 108l-12 34"/></g></svg>
-        <div class="cv" style="top:20px;text-align:right;font-size:3.4px;letter-spacing:.15em;color:#8d9298">METHOD OF EDITING</div>
-        <div class="cv t-big" style="top:32px;font-size:14px;color:#16171b">Rhythm</div>
-        <div class="cv t-big" style="top:47px;font-size:14px;color:#e5202f">In every cut</div>
+        <div class="cv" style="top:20px;text-align:right;font-size:3.4px;letter-spacing:.15em;color:#8d9298">THE ACTOR</div>
+        <div class="cv t-big" style="top:32px;font-size:14px;color:#16171b">Presence</div>
+        <div class="cv t-big" style="top:47px;font-size:14px;color:#e5202f">In every look</div>
         <div class="cv" style="top:76px;font-size:5.2px;font-weight:700;color:#16171b;line-height:1.7">
-          <div><b class="dot"></b>FELT VIA <b>THE CUT</b></div>
-          <div style="margin-top:8px"><b class="dot sq"></b>HEARD VIA <b>SOUND</b><br><span style="margin-left:11px">THAT STAYS</span></div>
+          <div><b class="dot"></b>FELT IN <b>THE STILLNESS</b></div>
+          <div style="margin-top:8px"><b class="dot sq"></b>SEEN IN <b>THE EYES</b><br><span style="margin-left:11px">THAT STAY</span></div>
         </div>`;
       case "launch": return `
         <div class="fill" style="background:linear-gradient(168deg,#f9d9e5,#f3bdd2 55%,#e8a3c0)"></div>
         <div class="ph" style="top:100px;bottom:0">${im}<div class="fill" style="background:linear-gradient(180deg,rgba(249,217,229,.97),rgba(249,217,229,0) 30%)"></div></div>
-        <div class="cv t-serif" style="top:36px;font-size:17px;color:#b03a63">EVERY FRAME.</div>
-        <div class="cv t-serif" style="top:55px;font-size:17px;color:#b03a63">EVERY CUT.</div>`;
+        <div class="cv t-serif" style="top:36px;font-size:17px;color:#b03a63">EVERY ROLE.</div>
+        <div class="cv t-serif" style="top:55px;font-size:17px;color:#b03a63">EVERY LOOK.</div>`;
       case "shop": return `
         <div class="fill" style="background:#fff"></div>
         <div class="ph" style="top:0;height:148px">${im}</div>
-        <div class="cv" style="top:158px;font-size:5.4px;font-weight:700;letter-spacing:.09em;color:#16171b">THE COLORIST</div>
-        <div class="cv" style="top:168px;font-size:4.2px;color:#7b8087">DaVinci grades · Cinematic looks</div>
-        <div style="position:absolute;left:10px;top:180px;padding:4px 11px;border-radius:20px;background:#16171b;font-size:4.6px;font-weight:600;color:#fff;letter-spacing:.05em">Graded to be felt</div>`;
+        <div class="cv" style="top:158px;font-size:5.4px;font-weight:700;letter-spacing:.09em;color:#16171b">THE CHARACTER</div>
+        <div class="cv" style="top:168px;font-size:4.2px;color:#7b8087">Intense · Grounded · Real</div>
+        <div style="position:absolute;left:10px;top:180px;padding:4px 11px;border-radius:20px;background:#16171b;font-size:4.6px;font-weight:600;color:#fff;letter-spacing:.05em">Built to be felt</div>`;
       case "brand": return `
         <div class="fill" style="background:linear-gradient(180deg,#0a2a4a,#0d3a63 50%,#08192b)"></div>
         <div class="ph" style="top:92px;bottom:0">${im}<div class="fill" style="background:linear-gradient(180deg,rgba(10,42,74,.98),rgba(10,42,74,0) 36%)"></div></div>
-        <div class="cv" style="top:16px;font-size:4.2px;line-height:1.7;color:rgba(255,255,255,.82);width:74px">Editor and cinematographer: rhythm in the cut, mood in the colour, and a story in every frame.</div>
+        <div class="cv" style="top:16px;font-size:4.2px;line-height:1.7;color:rgba(255,255,255,.82);width:74px">Aspiring actor from Hyderabad: presence in the stillness, truth in the eyes, and a story in every look.</div>
         <div style="position:absolute;right:10px;top:16px;font-size:5.4px;font-weight:600;color:#fff;opacity:.92">✳ MD</div>`;
       case "frete": return `
         <div class="fill" style="background:linear-gradient(158deg,#4a0c80 0%,#7a16a6 40%,#a81fc6 66%,#5c0e90 100%)"></div>
         <div class="ph" style="top:140px;bottom:0;opacity:.45;mix-blend-mode:screen">${im}</div>
         <div class="fill" style="background:radial-gradient(44% 16% at 50% 62%, rgba(255,255,255,.92), rgba(255,255,255,0) 72%)"></div>
         <div style="position:absolute;left:-6px;right:-6px;top:44px;height:13px;background:#ff2d8a;transform:rotate(-2.6deg);box-shadow:0 4px 12px rgba(255,45,138,.5)"></div>
-        <div style="position:absolute;left:0;right:0;top:45.5px;transform:rotate(-2.6deg);text-align:center;font-size:5.6px;font-weight:700;letter-spacing:.05em;color:#fff">ADS · MUSIC · WEDDINGS</div>
-        <div class="cv t-big" style="top:64px;font-size:24px;color:#fff;text-shadow:0 3px 0 rgba(84,9,124,.6)">25</div>
-        <div class="cv t-big" style="top:87px;font-size:24px;color:#fff;text-shadow:0 3px 0 rgba(84,9,124,.6)">Films</div>
-        <div class="cv t-big" style="top:113px;font-size:19px;color:#fff">+</div>`;
+        <div style="position:absolute;left:0;right:0;top:45.5px;transform:rotate(-2.6deg);text-align:center;font-size:5.6px;font-weight:700;letter-spacing:.05em;color:#fff">FILMS · ADS · MUSIC VIDEOS</div>
+        <div class="cv t-big" style="top:64px;font-size:24px;color:#fff;text-shadow:0 3px 0 rgba(84,9,124,.6)">Many</div>
+        <div class="cv t-big" style="top:87px;font-size:24px;color:#fff;text-shadow:0 3px 0 rgba(84,9,124,.6)">Faces</div>`;
       case "power": return `
         <div class="ph phf">${im}</div>
         <div class="fill" style="background:linear-gradient(180deg,rgba(6,5,10,0) 34%,rgba(6,5,10,.55) 52%,rgba(6,5,10,.92) 72%)"></div>
         <div class="cv t-serif" style="top:132px;font-size:16px;color:#fff">A STORY</div>
         <div class="cv t-serif" style="top:150px;font-size:16px;color:#fff">TELLER</div>
-        <div class="cv" style="top:171px;font-size:4.4px;letter-spacing:.07em;color:rgba(255,255,255,.85)">bringing every frame to life</div>`;
+        <div class="cv" style="top:171px;font-size:4.4px;letter-spacing:.07em;color:rgba(255,255,255,.85)">bringing every character to life</div>`;
       case "off": return `
         <div class="ph phf">${im}</div>
         <div class="fill" style="background:linear-gradient(180deg,rgba(3,9,20,0) 30%,rgba(3,9,20,.6) 48%,rgba(3,9,20,.95) 70%)"></div>

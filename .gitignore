@@ -40,3 +40,6 @@ generate_assets.py
 public/images/raw/
 
 .vercel
+
+# stale build caches moved aside
+/.next-broken-*/

@@ -1,9 +1,9 @@
-/* Static page skeleton, same structure as the RamaRaju index.html.
+/* Static page skeleton for the actor portfolio.
    public/js/main.js and public/js/hero.js fill it from public/js/data.js. */
 
 const SUN = `<svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`;
 const MOON = `<svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>`;
-const LINKS = `<a href="#about">About</a><a href="#work">Work</a><a href="#craft">Craft</a><a href="#tools">Tools</a><a href="#process">Process</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>`;
+const LINKS = `<a href="#about">About</a><a href="#lookbook">Lookbook</a><a href="#range">Range</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>`;
 
 export const MARKUP = `
   <!-- particle background for the sections below the hero -->
@@ -53,7 +53,7 @@ export const MARKUP = `
         <h1 class="h1 l1 hi" id="h1a"></h1>
         <p class="sub s1" id="sub1"></p>
         <p class="sub s2" id="sub2"></p>
-        <a href="#work" class="btn cta2" id="cta2"><span id="vpLabel"></span></a>
+        <a href="#lookbook" class="btn cta2" id="cta2"><span id="vpLabel"></span></a>
       </div>
 
       <div class="showcase">
@@ -80,7 +80,7 @@ export const MARKUP = `
       <div class="about-grid">
         <div class="about-photo reveal tilt" id="aboutCine">
           <div class="cine">
-            <img id="aboutPhoto" alt="Meesala Devadas editing on set" />
+            <img id="aboutPhoto" alt="Meesala Devadas, actor" />
             <div class="cine-spot"></div>
             <div class="cine-grain"></div>
             <div class="cine-scan"></div>
@@ -89,22 +89,22 @@ export const MARKUP = `
         </div>
         <div class="about-text reveal">
           <p class="eyebrow">About</p>
-          <h2 class="section-title">Every frame.<br /><em>One story.</em></h2>
+          <h2 class="section-title">Many faces.<br /><em>One dream.</em></h2>
           <div id="bio"></div>
           <dl class="facts" id="facts"></dl>
-          <div class="quals">
-            <p class="quals-title">Training</p>
-            <ol class="quals-list" id="quals"></ol>
-          </div>
-          <div class="stats">
-            <div class="stat"><strong>25+</strong><span>Films &amp; Reels</span></div>
-            <div class="stat"><strong id="statTools">0</strong><span>Pro Tools</span></div>
-            <div class="stat"><strong>✂️</strong><span>Editor</span></div>
-            <div class="stat"><strong>🎥</strong><span>Cinematographer</span></div>
-            <div class="stat"><strong>🎨</strong><span>Colorist</span></div>
-          </div>
         </div>
       </div>
+    </section>
+
+    <!-- LOOKBOOK -->
+    <section id="lookbook" class="section" data-shape="2">
+      <div class="section-head reveal">
+        <p class="eyebrow">Lookbook</p>
+        <h2 class="section-title">In front of the <em>lens</em></h2>
+        <p class="section-sub">Characters, streets, studios and the quiet moments in between. Every look tells a different story.</p>
+      </div>
+      <div class="lb-filters reveal" id="lbFilters" role="tablist" aria-label="Filter lookbook"></div>
+      <div class="lb-grid" id="lookbookGrid"></div>
     </section>
 
     <!-- 3D FILM STRIPS -->
@@ -113,59 +113,16 @@ export const MARKUP = `
       <div class="filmstrip reverse"><div class="strip-track" id="stripTrack2"></div></div>
     </section>
 
-    <!-- WORK -->
-    <section id="work" class="section" data-shape="2">
+    <!-- RANGE -->
+    <section id="range" class="section" data-shape="1">
       <div class="section-head reveal">
-        <p class="eyebrow">Selected Work</p>
-        <h2 class="section-title">On <em>Screen</em></h2>
-        <p class="section-sub">Click a card for the story behind the edit and to watch the film.</p>
+        <p class="eyebrow">Range</p>
+        <h2 class="section-title">From <em>menace</em><br />to <em>warmth</em>.</h2>
+        <p class="section-sub">The kinds of characters he is ready to play, shown through his own looks and shoots.</p>
       </div>
-      <div class="films-grid" id="filmsGrid"></div>
-      <div class="awards reveal">
-        <h3 class="short-title">Work <em>Experience</em></h3>
-        <div class="craft-grid" id="experience"></div>
-      </div>
-    </section>
-
-    <!-- THE CRAFT -->
-    <section id="craft" class="section" data-shape="1">
-      <div class="section-head reveal">
-        <p class="eyebrow">The Craft</p>
-        <h2 class="section-title">Felt in the <em>cut</em>.<br />Seen in the <em>colour</em>.</h2>
-        <p class="section-sub">An editor who finds the rhythm, a cinematographer who shapes the light, and a colorist and sound designer who gives every frame its mood.</p>
-      </div>
-      <div class="craft-grid" id="craftGrid"></div>
-    </section>
-
-    <!-- SOFTWARE TOOLS -->
-    <section id="tools" class="section" data-shape="4">
-      <div class="section-head reveal">
-        <p class="eyebrow">Post-Production Suite</p>
-        <h2 class="section-title">Tools of the <em>Trade</em></h2>
-        <p class="section-sub">Industry-standard software for editing, colour, motion graphics and sound, from first assembly to final master.</p>
-      </div>
-      <div class="sports-grid" id="toolsGrid"></div>
-      <div class="sports-badge-note reveal">
-        <div class="sports-note-card">
-          <span class="sports-note-icon">🎬</span>
-          <div>
-            <strong>End-to-End Production Pipeline</strong>
-            <p>From treatment and lighting setup on set to the final colour grade and sound mix, Devadas handles the whole journey of a film, so the story keeps one voice from the first frame to the last.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROCESS -->
-    <section id="process" class="section" data-shape="3">
-      <div class="section-head reveal">
-        <p class="eyebrow">Creative Process</p>
-        <h2 class="section-title">Idea. Frame. <em>Rhythm.</em></h2>
-        <p class="section-sub" id="processIntro"></p>
-      </div>
-      <div class="yoga-grid" id="processGrid"></div>
+      <div class="craft-grid" id="rangeGrid"></div>
       <div class="yoga-cta reveal">
-        <a href="#contact" class="btn btn-flow"><span>Start a project</span></a>
+        <a href="#contact" class="btn btn-flow"><span>Book an audition</span></a>
       </div>
     </section>
 
@@ -192,34 +149,15 @@ export const MARKUP = `
       <div class="contact-card reveal">
         <p class="eyebrow">Contact</p>
         <h2 class="section-title">Let's <em>Create</em></h2>
-        <p class="section-sub">For commercials, music videos, short films, wedding films and creator content.</p>
+        <p class="section-sub">For casting, auditions and collaborations: feature films, short films, web series, music videos and ad campaigns.</p>
         <div class="contact-links" id="contactLinks"></div>
       </div>
-      <p class="credit-line" id="credits"></p>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Meesala Devadas · Video Editor · Cinematographer · Visual Storyteller</p>
+    <p>© <span id="year"></span> Meesala Devadas · Aspiring Actor</p>
   </footer>
-
-  <!-- Project modal -->
-  <div class="modal" id="movieModal" aria-hidden="true">
-    <div class="modal-backdrop" data-close></div>
-    <div class="modal-box">
-      <button class="modal-close" data-close aria-label="Close">&times;</button>
-      <div class="modal-poster"><img id="mPoster" alt="" /></div>
-      <div class="modal-info">
-        <p class="eyebrow" id="mMeta"></p>
-        <h3 id="mTitle"></h3>
-        <p class="m-role" id="mRole"></p>
-        <div class="film-tags" id="mTags"></div>
-        <p id="mDesc"></p>
-        <a id="mLink" class="btn btn-flow" target="_blank" rel="noopener"><span>▶ Watch now</span></a>
-        <p class="m-nolink" id="mNoLink">Watch link coming soon</p>
-      </div>
-    </div>
-  </div>
 
   <!-- Photo lightbox -->
   <div class="lightbox" id="lightbox" aria-hidden="true">

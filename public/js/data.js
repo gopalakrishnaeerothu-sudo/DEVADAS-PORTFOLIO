@@ -4,8 +4,7 @@
    This is the ONLY file you need to edit to update the website.
 
    HOW TO ADD THINGS
-   • His photos       → put image files in  public/images/profile/  or  public/images/gallery/
-   • Project images   → put image files in  public/images/work/
+   • New photos → put image files in  public/images/devadas/
    • Then write the path in the lists below (exact spelling, incl. .jpg/.png)
 
    If an image file is missing, the site automatically shows a styled
@@ -16,36 +15,32 @@ const SITE = {
   name: "Meesala Devadas",
   shortName: "Devadas",
   initials: "MD",
-  roles: ["Video Editor", "Cinematographer", "Visual Storyteller"],
-  tagline: "Every frame has a story. I bring it to life.",
+  roles: ["Aspiring Actor"],
+  tagline: "Every character has a story. I'm ready to bring it to life.",
 
   // Main photo (used in the film strips and as a fallback)
   heroPhoto: "/images/profile/devadas-poster.jpg",
 
   // Photo shown in the "About" section, with a cinematic black & white effect
-  aboutPhoto: "/images/profile/devadas-original.jpg",
+  aboutPhoto: "/images/devadas/coffee-smile.jpg",
 
   // About text: each line becomes a paragraph
   bio: [
-    "Meesala Devadas is a video editor, cinematographer and visual storyteller based in Hyderabad and Nidadavole, turning raw footage and creative vision into films that people feel.",
-    "As an editor, he works in rhythm: pacing, beat-matched cuts, J and L audio cuts and speed ramps that carry an audience from the first frame to the last. Commercials, music videos, short films, wedding films and creator reels all get the same care.",
-    "Behind the camera, he shapes light and composition, from moody low-light framing to golden-hour warmth. In the grade, he builds distinctive cinematic looks in DaVinci Resolve, and in the mix, he layers Foley and ambience until the picture breathes.",
-    "He trained in film editing, cinematography and photography at Restart Academy, Hyderabad, where he now leads post-production for film, advertising and non-profit projects."
+    "Meesala Devadas is an aspiring actor from Hyderabad and Nidadavole, working towards his first break in front of the camera.",
+    "His photoshoots already show the range he wants to bring to the screen: a blood-soaked, unnervingly calm character in one frame, a confident leading man on a rain-wet street in the next, and a warm, quick-to-laugh everyday guy in the one after that.",
+    "He is comfortable on camera, takes direction seriously and is hungry to learn. He believes a look, a tilt of the head or a held silence can say more than a line of dialogue.",
+    "He is open to auditions for feature films, short films, web series, music videos and ad campaigns, and he will give every role, big or small, his full commitment."
   ],
 
   // Text on the first (3D hero) screen
   hero: {
     hello: "Hi, I'm Devadas",                              // giant heading on the first screen
     cutout: "/images/profile/devadas-hero-cutout.webp",    // cut-out portrait standing over the 3D wheel
-    tagline1: "Video Editor · Cinematographer",
-    tagline2: "every frame has a story",
-    navCta: "Get in touch",
-    heroCta: "Watch my work"
+    tagline1: "Aspiring Actor · Hyderabad",
+    tagline2: "ready for the first take",
+    navCta: "Cast me",
+    heroCta: "See my looks"
   },
-
-  // Process section intro
-  processIntro:
-    "Every project moves through the same four stages, so the story stays clear from the first idea to the final master: a vision agreed up front, footage captured with intent, a timeline cut to rhythm, and a grade and mix that make it cinematic.",
 
   // Contact details: leave "" for anything you don't want shown
   contact: {
@@ -61,229 +56,137 @@ const SITE = {
 };
 
 /* ---------------------------------------------------------------------
-   PROJECTS (shown as poster cards; click opens details + Watch button)
-   poster : title-related image inside public/images/work/
-   link   : Google Drive (or YouTube) watch URL
+   PROFILE FACTS (shown in About)
    --------------------------------------------------------------------- */
-const MOVIES = [
-  {
-    title: "Thar 4x4",
-    year: "2024",
-    duration: "0:45",
-    genre: "Automotive Commercial",
-    role: "High-octane commercial",
-    tags: ["Speed Ramping", "Engine Foley Design", "Teal & Orange Grade"],
-    tools: "DaVinci Resolve · CapCut Pro · Custom Foley",
-    link: "https://drive.google.com/file/d/1iFsdpZDJNIg7pxljyGZgtfs5dqDqX5GD/view?usp=drivesdk",
-    poster: "/images/work/thar.jpg",
-    description: "An adrenaline-fuelled automotive commercial built on raw horsepower. Aggressive speed ramping and punchy transition cuts are driven by high-impact sound design: engine revs, gravel crunches and bass drops that keep the pulse up from start to finish."
-  },
-  {
-    title: "Cover Song",
-    year: "2024",
-    duration: "3:42",
-    genre: "Music Video",
-    role: "Melodic visual odyssey",
-    tags: ["Beat-Synced Cuts", "Warm Film Emulation", "Multi-Angle Lighting"],
-    tools: "DaVinci Resolve · Premiere Pro · Audition",
-    link: "https://drive.google.com/file/d/1BkbV98CpzX1OXd7tmZp71UC0r3JI8PeJ/view?usp=drivesdk",
-    poster: "/images/work/cover-song.jpg",
-    description: "A rhythmic musical cover film taken from pre-production to final master. Cut points are synced to the musical crescendo, and an amber-violet cinematic grade keeps natural skin tones under complex studio lighting."
-  },
-  {
-    title: "Honey Is The Best",
-    year: "2024",
-    duration: "2:15",
-    genre: "Short Film",
-    role: "Narrative short with creators",
-    tags: ["Dialogue Pacing", "Punchy Sound Cues", "Color Harmony"],
-    tools: "Premiere Pro · CapCut · Photoshop",
-    link: "https://drive.google.com/file/d/1Qek2k4QKTRrcL02eNKhRQB26Oeme7ID5/view?usp=drivesdk",
-    poster: "/images/work/honey.jpg",
-    description: "A humorous and intense narrative short made with digital creators. Dialogue cuts are timed so every joke and dramatic beat lands, location audio is cleaned, and playful sound cues sit inside cinematic framing."
-  },
-  {
-    title: "Chintu Weds Sanju",
-    year: "2024",
-    duration: "4:10",
-    genre: "Wedding Film",
-    role: "Cinematic wedding teaser",
-    tags: ["Golden Hour Tones", "Emotional Soundscapes", "Smooth Slow-Mo"],
-    tools: "DaVinci Resolve · Premiere Pro · LUT Color Science",
-    link: "https://drive.google.com/file/d/1LqQ3R7MaUcigwdIZijgyoyU5d8otD04s/view?usp=drivesdk",
-    poster: "/images/work/wedding.jpg",
-    description: "A narrative-first wedding highlight film that captures raw emotion, vows and traditional celebration. Speeches and vows are woven over visual crescendos with rich golden-hour film tones and a multi-track acoustic score."
-  },
-  {
-    title: "Anamorphic Dreams",
-    year: "2024",
-    duration: "1:30",
-    genre: "Cinematography Reel",
-    role: "Light, lens and shadow",
-    tags: ["Anamorphic Aspect Ratio", "Natural Rim Lighting", "Color Depth"],
-    tools: "DaVinci Resolve · Blackmagic RAW · Anamorphic Lenses",
-    link: "https://drive.google.com/file/d/1BkbV98CpzX1OXd7tmZp71UC0r3JI8PeJ/view?usp=drivesdk",
-    poster: "/images/work/cinematography.jpg",
-    description: "A personal showcase of camera technique: atmospheric lighting, low-light nightscapes, lens flares, deliberate blocking and handheld intimacy across different genres."
-  },
-  {
-    title: "Restart Academy Showcase",
-    year: "2024",
-    duration: "1:50",
-    genre: "Promotional Film",
-    role: "Academy & non-profit promo",
-    tags: ["Documentary Pacing", "Engaging B-Roll", "Story Arc"],
-    tools: "Premiere Pro · DaVinci Resolve",
-    link: "https://drive.google.com/file/d/1iFsdpZDJNIg7pxljyGZgtfs5dqDqX5GD/view?usp=drivesdk",
-    poster: "/images/work/academy.jpg",
-    description: "A promotional film for Restart Academy and its charitable initiatives. Student soundbites, fast-moving workshop b-roll and an uplifting score drive awareness and engagement."
-  }
-];
-
-/* ---------------------------------------------------------------------
-   PHOTO GALLERY (rotating 3D carousel + "All photos" grid)
-   --------------------------------------------------------------------- */
-const GALLERY = [
-  { src: "/images/profile/devadas-poster.jpg", caption: "Portrait" },
-  { src: "/images/work/thar.jpg", caption: "Thar 4x4" },
-  { src: "/images/profile/devadas-original.jpg", caption: "In the edit" },
-  { src: "/images/work/cover-song.jpg", caption: "Cover Song" },
-  { src: "/images/gallery/cinema-camera.jpg", caption: "Cinema camera" },
-  { src: "/images/work/wedding.jpg", caption: "Chintu Weds Sanju" },
-  { src: "/images/profile/devadas-cinematic.jpg", caption: "Cinematic look" },
-  { src: "/images/work/honey.jpg", caption: "Honey Is The Best" },
-  { src: "/images/gallery/studio-mic.jpg", caption: "Sound design" },
-  { src: "/images/work/cinematography.jpg", caption: "Anamorphic Dreams" },
-  { src: "/images/gallery/film-set.jpg", caption: "On set" },
-  { src: "/images/work/academy.jpg", caption: "Restart Academy" },
-  { src: "/images/gallery/thar-red.jpg", caption: "Automotive shoot" },
-  { src: "/images/profile/devadas-hero-full.jpg", caption: "Brush portrait" }
-];
-
-/* ---------------------------------------------------------------------
-   TRAINING (shown in About, in order)
-   --------------------------------------------------------------------- */
-const QUALIFICATIONS = [
-  { title: "Professional Diploma in Film Editing, Cinematography & Photography", type: "Restart Academy" }
-];
-
-/* ---------------------------------------------------------------------
-   SOFTWARE TOOLS (shown in the "Tools of the Trade" grid)
-   mono : the letters shown in the logo frame · color : its glow colour
-   --------------------------------------------------------------------- */
-const TOOLS = [
-  { name: "DaVinci Resolve Studio", mono: "Dv", color: "#ff5a5a", level: "Advanced · Primary", proficiency: 95,
-    desc: "Node-based colour grading, Fairlight audio mixing and high-fidelity 4K exports." },
-  { name: "Adobe Premiere Pro", mono: "Pr", color: "#9999ff", level: "Advanced · Primary", proficiency: 94,
-    desc: "Narrative cutting, multi-cam sync and timeline collaboration." },
-  { name: "CapCut Pro", mono: "Cc", color: "#3fe3ff", level: "Master · Primary", proficiency: 96,
-    desc: "Fast vertical reels, viral sound transitions, keyframe animation and trending effects." },
-  { name: "Adobe After Effects", mono: "Ae", color: "#d291ff", level: "Intermediate", proficiency: 82,
-    desc: "Kinetic typography, logo reveals, stabilisation and VFX compositing." },
-  { name: "Adobe Photoshop", mono: "Ps", color: "#31a8ff", level: "Proficient", proficiency: 88,
-    desc: "High-CTR thumbnails, posters, graphic overlays and asset clean-up." },
-  { name: "Audition / Fairlight", mono: "Au", color: "#00e676", level: "Proficient", proficiency: 86,
-    desc: "Spectral editing, EQ, compression and cinematic atmospheric sound beds." }
-];
-
 const FACTS = [
   { label: "Full name", value: "Meesala Devadas" },
   { label: "Based in", value: "Hyderabad / Nidadavole" },
   { label: "Languages", value: "Telugu · English" },
-  { label: "Instagram", value: "@editor_of_nidadavole" },
-  { label: "Work", value: "Editor · Cinematographer · Colorist" },
-  { label: "Status", value: "Available for freelance & full-time" }
+  { label: "Pursuing", value: "Acting" },
+  { label: "Open to", value: "Films · Web series · Ads · Music videos" },
+  { label: "Status", value: "Open to auditions & first roles" }
 ];
 
 /* ---------------------------------------------------------------------
-   THE CRAFT (three cards)
+   RANGE (three cards: the kinds of characters he plays)
    --------------------------------------------------------------------- */
-const CRAFT = [
+const RANGE = [
   {
-    icon: "✂️",
-    title: "Video Editor",
-    text: "Pacing, rhythm and narrative arcs: the cut decides what the audience feels.",
-    points: ["Beat-matched, dynamic cutting", "High-retention reels with 3-second hooks", "Multi-camera timeline workflows"]
+    icon: "🔥",
+    title: "Intense & Dark",
+    text: "Villains, outsiders and men on the edge, with a calm that is more unsettling than shouting.",
+    points: ["Gritty, blood-and-sweat character looks", "Menace carried in stillness and the eyes", "Crime, thriller and action roles"]
   },
-  {
-    icon: "🎥",
-    title: "Cinematographer",
-    text: "Composition, camera motion and light that shape every frame.",
-    points: ["Anamorphic framing & gimbal work", "Key, rim and low-light lighting", "Storyboards and shot planning"]
-  },
-  {
-    icon: "🎨",
-    title: "Colour & Sound",
-    text: "Cinematic grades and layered sound that make footage feel alive.",
-    points: ["DaVinci grades, LUTs, skin-tone care", "Foley, dialogue clean-up, mastering", "Film emulation and HDR tone mapping"]
-  }
-];
-
-/* ---------------------------------------------------------------------
-   EXPERIENCE
-   --------------------------------------------------------------------- */
-const EXPERIENCE = [
   {
     icon: "🎬",
-    role: "Video Editor & Post-Production Specialist",
-    company: "Restart Academy · Hyderabad",
-    period: "2023 — Present",
-    points: [
-      "Leads editing workflows for film and advertising projects",
-      "Promotional films and multi-camera event coverage for non-profits",
-      "Colour grading, audio restoration and custom LUTs in DaVinci Resolve"
-    ]
+    title: "Lead & Swagger",
+    text: "The confident leading man: sunglasses, monsoon skies and a presence that owns the frame.",
+    points: ["Hero entries and poster-style shots", "Street, night and landmark locations", "Style-led music video looks"]
   },
   {
-    icon: "🎥",
-    role: "Independent Cinematographer & Freelance Editor",
-    company: "Devadas Creative Studio · Hyderabad / Nidadavole",
-    period: "2022 — Present",
-    points: [
-      "25+ commercial reels, wedding teasers, music videos and shorts",
-      "Visual styles that lifted client social engagement by over 300%",
-      "End-to-end production: treatment, lighting, edit and grade"
-    ]
+    icon: "☕",
+    title: "Warm & Everyday",
+    text: "The friend, the colleague, the guy next door. Easy-going, natural and quick to laugh.",
+    points: ["Natural, relaxed on-camera ease", "Light comedy and slice-of-life", "Brand and lifestyle ad campaigns"]
   }
+];
+
+/* ---------------------------------------------------------------------
+   LOOKBOOK (photos of Devadas with a short story for each)
+   cat   : which filter tab it sits under (must match a LOOKBOOK_CATS id)
+   title : short headline · note : one or two sentences about the shot
+   --------------------------------------------------------------------- */
+const LOOKBOOK_CATS = [
+  { id: "character", label: "In Character" },
+  { id: "street", label: "Street & Style" },
+  { id: "studio", label: "Studio & Off-Duty" }
+];
+
+const LOOKBOOK = [
+  { src: "/images/devadas/cleaver-wall.jpg", cat: "character", title: "Stare Down",
+    note: "Against a weathered yellow wall, head tilted, eyes locked on the lens. A gritty character look where the stare does all the talking." },
+  { src: "/images/devadas/charminar-night.jpg", cat: "street", title: "Charminar Nights",
+    note: "Hyderabad's landmark glowing gold behind him. A night portrait on the streets he calls home, built on deep blues and warm stone." },
+  { src: "/images/devadas/coffee-smile.jpg", cat: "studio", title: "First Coffee",
+    note: "A warm, easy laugh against a clean grey wall. The relaxed, good-humoured side that people who work with him know best." },
+  { src: "/images/devadas/lockup-chair.jpg", cat: "character", title: "Lock-Up",
+    note: "A police-station set, one wrist chained to the cell bars, and completely at ease. A character study in calm defiance." },
+  { src: "/images/devadas/mg-hood.jpg", cat: "street", title: "Top of the Frame",
+    note: "Standing tall on the bonnet under a heavy monsoon sky, an old brick ruin on the horizon. A hero shot composed like a film poster." },
+  { src: "/images/devadas/office-headphones.jpg", cat: "studio", title: "Lost in Thought",
+    note: "Headphones on, gaze far away, hand mid-gesture. A quiet, unposed moment that shows how naturally he holds the camera." },
+  { src: "/images/devadas/cleaver-forest.jpg", cat: "character", title: "The Butcher's Calm",
+    note: "Wet hair, stage blood and a cleaver in a dry forest. A dark look where the stillness is scarier than the prop." },
+  { src: "/images/devadas/balcony.jpg", cat: "street", title: "Iron & Rust",
+    note: "Leaning over an old iron balcony, framed by rust, steel and geometric grilles. A brooding, confident look." },
+  { src: "/images/devadas/mirror-lens.jpg", cat: "studio", title: "Mirror, Mirror",
+    note: "A close-up in soft window light: tousled hair, a thoughtful downward glance and every detail of the face on show." },
+  { src: "/images/devadas/mg-shades.jpg", cat: "street", title: "Monsoon Shades",
+    note: "Raindrops beading on a white SUV and a slow reach for the sunglasses. Moody overcast light and leading-man attitude." },
+  { src: "/images/devadas/coffee-sip.jpg", cat: "studio", title: "Studio Break",
+    note: "Maroon shirt, grey wall, a slow sip in profile. Minimal, clean and completely at ease." },
+  { src: "/images/devadas/car-door.jpg", cat: "street", title: "Driver's Seat",
+    note: "Half in, half out of the car with a glance back over the shoulder. Natural light, shallow depth and easy charm." },
+  { src: "/images/devadas/office-cap.jpg", cat: "studio", title: "Off the Clock",
+    note: "Cap low, sleeve rolled, tattoo on show. A candid, laid-back moment with real street-style energy." },
+  { src: "/images/devadas/puppy.jpg", cat: "studio", title: "Best Co-Star",
+    note: "Golden light, a soft city backdrop and a fluffy co-star who stole the whole scene." }
+];
+
+/* ---------------------------------------------------------------------
+   PHOTO GALLERY ("All photos" grid + film strips)
+   --------------------------------------------------------------------- */
+const GALLERY = [
+  { src: "/images/devadas/mg-hood.jpg", caption: "Top of the frame" },
+  { src: "/images/devadas/charminar-night.jpg", caption: "Charminar nights" },
+  { src: "/images/devadas/cleaver-wall.jpg", caption: "In character" },
+  { src: "/images/devadas/coffee-smile.jpg", caption: "First coffee" },
+  { src: "/images/devadas/lockup-chair.jpg", caption: "Lock-up" },
+  { src: "/images/devadas/balcony.jpg", caption: "Iron & rust" },
+  { src: "/images/devadas/office-headphones.jpg", caption: "Lost in thought" },
+  { src: "/images/devadas/cleaver-forest.jpg", caption: "The butcher's calm" },
+  { src: "/images/devadas/mirror-lens.jpg", caption: "Mirror, mirror" },
+  { src: "/images/devadas/mg-shades.jpg", caption: "Monsoon shades" },
+  { src: "/images/devadas/coffee-sip.jpg", caption: "Studio break" },
+  { src: "/images/devadas/car-door.jpg", caption: "Driver's seat" },
+  { src: "/images/devadas/cleaver-portrait.jpg", caption: "Look test" },
+  { src: "/images/devadas/office-cap.jpg", caption: "Off the clock" },
+  { src: "/images/devadas/balcony-square.jpg", caption: "Balcony portrait" },
+  { src: "/images/devadas/puppy.jpg", caption: "Best co-star" },
+  { src: "/images/profile/devadas-poster.jpg", caption: "Poster portrait" },
+  { src: "/images/profile/devadas-hero-full.jpg", caption: "Brush portrait" }
+];
+
+/* ---------------------------------------------------------------------
+   3D CAROUSEL (a shorter pick, so the spinning ring stays readable)
+   --------------------------------------------------------------------- */
+const CAROUSEL = [
+  { src: "/images/devadas/mg-hood.jpg", caption: "Top of the frame" },
+  { src: "/images/devadas/charminar-night.jpg", caption: "Charminar nights" },
+  { src: "/images/devadas/cleaver-wall.jpg", caption: "In character" },
+  { src: "/images/devadas/coffee-sip.jpg", caption: "Studio break" },
+  { src: "/images/devadas/lockup-chair.jpg", caption: "Lock-up" },
+  { src: "/images/devadas/mg-shades.jpg", caption: "Monsoon shades" },
+  { src: "/images/devadas/car-door.jpg", caption: "Driver's seat" },
+  { src: "/images/devadas/cleaver-forest.jpg", caption: "The butcher's calm" },
+  { src: "/images/devadas/balcony.jpg", caption: "Iron & rust" },
+  { src: "/images/devadas/coffee-smile.jpg", caption: "First coffee" },
+  { src: "/images/devadas/office-cap.jpg", caption: "Off the clock" },
+  { src: "/images/devadas/puppy.jpg", caption: "Best co-star" }
 ];
 
 /* ---------------------------------------------------------------------
    3D RING PHOTOS (the rotating wheel of cards on the first screen)
    --------------------------------------------------------------------- */
 const RING_PHOTOS = [
-  "/images/work/thar.jpg",
-  "/images/profile/devadas-original.jpg",
-  "/images/work/cover-song.jpg",
-  "/images/work/wedding.jpg",
-  "/images/gallery/cinema-camera.jpg",
-  "/images/work/cinematography.jpg",
-  "/images/work/honey.jpg",
-  "/images/gallery/film-set.jpg"
-];
-
-/* ---------------------------------------------------------------------
-   CREATIVE PROCESS (four cards)
-   --------------------------------------------------------------------- */
-const PROCESS = [
-  { icon: "💡", title: "01 · Idea & Vision", text: "Deconstructing the story: audience mood, pacing, visual references and the soundscape." },
-  { icon: "🎥", title: "02 · Production", text: "Cinematic angles, camera moves, three-point lighting and crisp 4K capture with multi-track audio." },
-  { icon: "✂️", title: "03 · Editing & Rhythm", text: "Assembly, tempo sync, speed ramps and J/L cuts, tightening every millisecond." },
-  { icon: "🎨", title: "04 · Colour & Sound", text: "Node-based grading, film grain, spatial Foley and multi-platform master export." }
-];
-
-/* ---------------------------------------------------------------------
-   IMAGE CREDITS (title images are freely licensed from Wikimedia Commons)
-   --------------------------------------------------------------------- */
-const COMMONS = "https://commons.wikimedia.org/wiki/File:";
-const CREDITS = [
-  { label: "Thar · DjDavid1998", license: "CC BY-SA 4.0", url: COMMONS + "Mahindra_Thar_Photoshoot_at_Perupalem_Beach_(West_Godavari_District,_AP,_India)_Djdavid.jpg" },
-  { label: "Red Thar · Ank Kumar", license: "CC BY-SA 4.0", url: COMMONS + "Mahindra_Thar_SUV_in_%22Red_Rage%22_color_at_Ashiana_Brahmanda,_East_Singbhum_India_(Ank_Kumar,_Infosys_limited)_01.jpg" },
-  { label: "Microphone · Will Fisher", license: "CC BY-SA 2.0", url: COMMONS + "Neumann_U87_Condenser_Microphone_-_Studio_A,_In_Your_Ear_Studios.jpg" },
-  { label: "Studio mic · Tim Sheerman-Chase", license: "CC BY 2.0", url: COMMONS + "Condenser_Microphone_with_Pop_Filter_and_Reflection_Filter.jpg" },
-  { label: "Honey · Scott Bauer, USDA ARS", license: "Public domain", url: COMMONS + "Runny_hunny.jpg" },
-  { label: "Wedding · Maheima Kapur", license: "CC BY 3.0", url: COMMONS + "Bride_And_Groom_After_An_Indian_Wedding_(156684579).jpeg" },
-  { label: "Cinema camera · Sean P. Anderson", license: "CC BY 2.0", url: COMMONS + "Arri_Alexa_camera.jpg" },
-  { label: "Camera · Major Eleven", license: "CC BY-SA 3.0", url: COMMONS + "Arri_Alexa_01.jpg" },
-  { label: "Clapperboard · Mattbr", license: "CC BY 2.0", url: COMMONS + "Clapperboard,_O2_film,_September_2008.jpg" },
-  { label: "Film set · Lesless", license: "CC BY-SA 4.0", url: COMMONS + "Film_set_in_Moscow_20240618_152950.jpg" }
+  "/images/devadas/cleaver-wall.jpg",
+  "/images/devadas/charminar-night.jpg",
+  "/images/devadas/coffee-sip.jpg",
+  "/images/devadas/mg-hood.jpg",
+  "/images/devadas/lockup-chair.jpg",
+  "/images/devadas/mg-shades.jpg",
+  "/images/devadas/coffee-smile.jpg",
+  "/images/devadas/balcony.jpg",
+  "/images/devadas/car-door.jpg",
+  "/images/devadas/cleaver-forest.jpg"
 ];

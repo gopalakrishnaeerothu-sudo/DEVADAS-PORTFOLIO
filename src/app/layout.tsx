@@ -3,25 +3,21 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://devadas-portfolio.vercel.app"),
-  title: "Meesala Devadas | Video Editor, Cinematographer & Visual Storyteller",
+  title: "Meesala Devadas | Aspiring Actor",
   description:
-    "Official portfolio of Meesala Devadas: video editor, cinematographer and colorist from Hyderabad / Nidadavole. Commercials, music videos, short films, wedding films and cinematography reels.",
+    "Portfolio of Meesala Devadas, an aspiring actor from Hyderabad / Nidadavole. Character looks, lookbook and casting contact for films, web series, music videos and ads.",
   keywords: [
     "Meesala Devadas",
-    "Devadas Video Editor",
-    "Video Editor Hyderabad",
-    "Cinematographer Hyderabad",
-    "Restart Academy",
-    "DaVinci Resolve",
-    "Adobe Premiere Pro",
-    "CapCut Video Editor",
+    "Devadas Actor",
+    "Actor Hyderabad",
+    "Telugu Actor",
+    "Actor Portfolio",
     "Nidadavole",
-    "editor_of_nidadavole",
   ],
   authors: [{ name: "Meesala Devadas" }],
   openGraph: {
-    title: "Meesala Devadas | Video Editor & Cinematographer",
-    description: "Every frame has a story. I bring it to life.",
+    title: "Meesala Devadas | Aspiring Actor",
+    description: "Every character has a story. I'm ready to bring it to life.",
     url: "https://devadas-portfolio.vercel.app",
     siteName: "Devadas Portfolio",
     locale: "en_US",
